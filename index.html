@@ -256,7 +256,71 @@
   .btn-restart{padding:10px 22px;background:transparent;color:rgba(255,255,255,.55);border:1.5px solid rgba(255,255,255,.18);border-radius:9px;font-family:'DM Sans',sans-serif;font-size:.88rem;font-weight:500;cursor:pointer;transition:all .2s;}
   .btn-restart:hover{border-color:rgba(255,255,255,.5);color:#fff;}
 
-  @media(max-width:660px){
+  /* ── CULTURAL VALUES SECTION ── */
+  .values-wrap{max-width:960px;margin:0 auto;padding:42px 32px 68px;}
+  .values-hero{margin-bottom:36px;}
+  .values-eyebrow{font-size:.68rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--gold-dark);margin-bottom:9px;}
+  .values-hero h2{font-family:'Playfair Display',serif;font-size:clamp(1.75rem,4vw,2.35rem);margin-bottom:11px;}
+  .values-hero p{font-size:.91rem;color:var(--ink-light);line-height:1.72;max-width:660px;}
+
+  .values-dim-block{background:#fff;border-radius:14px;border:1.5px solid var(--border);padding:26px 28px;margin-bottom:18px;}
+  .values-dim-header{margin-bottom:18px;}
+  .values-dim-name{font-family:'Playfair Display',serif;font-size:1.1rem;margin-bottom:5px;}
+  .values-poles{display:flex;justify-content:space-between;margin-bottom:4px;}
+  .values-pole{font-size:.76rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;}
+  .pole-left{color:var(--navy);}
+  .pole-right{color:var(--teal);}
+  .values-pole-desc{display:flex;justify-content:space-between;margin-bottom:16px;}
+  .values-pole-desc span{font-size:.76rem;color:var(--ink-light);max-width:46%;}
+  .values-pole-desc span:last-child{text-align:right;}
+
+  /* spectrum display */
+  .spectrum-wrap{margin-bottom:20px;}
+  .spectrum-clusters{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:10px;}
+  .spectrum-zone{background:var(--cream);border-radius:8px;padding:8px 10px;min-height:60px;border:1px solid var(--border);}
+  .spectrum-zone.italy-zone{background:#FFF8E8;border-color:rgba(246,171,15,.4);}
+  .spectrum-zone-label{font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-light);margin-bottom:5px;}
+  .spectrum-zone.italy-zone .spectrum-zone-label{color:var(--gold-dark);}
+  .italy-badge{display:inline-block;font-size:.58rem;font-weight:700;letter-spacing:.06em;background:var(--gold);color:var(--ink);border-radius:4px;padding:1px 5px;margin-left:4px;text-transform:uppercase;vertical-align:middle;}
+  .cluster-tag{display:inline-block;font-size:.72rem;color:var(--ink-light);line-height:1.6;}
+  .cluster-tag.latin-europe{color:var(--gold-dark);font-weight:600;}
+
+  /* student marker bar */
+  .marker-bar-wrap{position:relative;height:28px;margin-top:4px;}
+  .marker-bar-track{position:absolute;top:50%;left:0;right:0;height:4px;background:var(--border);border-radius:2px;transform:translateY(-50%);}
+  .marker-bar-fill{position:absolute;top:50%;left:0;height:4px;background:var(--navy);border-radius:2px;transform:translateY(-50%);transition:width .6s ease;}
+  .marker-triangle{position:absolute;top:50%;transform:translate(-50%,-50%);font-size:1rem;color:var(--navy);transition:left .6s ease;line-height:1;}
+  .marker-bar-labels{display:flex;justify-content:space-between;font-size:.64rem;color:var(--ink-light);margin-top:3px;}
+
+  /* values questions */
+  .values-questions{display:flex;flex-direction:column;gap:18px;margin-top:16px;padding-top:16px;border-top:1.5px dashed var(--border);}
+  .values-q-text{font-size:.88rem;font-weight:600;color:var(--ink);line-height:1.6;margin-bottom:8px;}
+  .values-scale-labels{display:flex;justify-content:space-between;font-size:.68rem;color:var(--ink-light);margin-bottom:5px;line-height:1.4;}
+  .values-scale-labels span{max-width:44%;}
+  .values-scale-labels span:last-child{text-align:right;}
+
+  /* results page values profile */
+  .values-profile-card{background:#fff;border-radius:17px;border:1.5px solid var(--border);padding:30px;margin-bottom:26px;box-shadow:0 4px 20px var(--shadow);}
+  .values-profile-card h3{font-family:'Playfair Display',serif;font-size:1.15rem;margin-bottom:6px;}
+  .values-profile-card .card-sub{font-size:.83rem;color:var(--ink-light);margin-bottom:22px;line-height:1.6;}
+  .values-result-row{margin-bottom:16px;}
+  .values-result-poles{display:flex;justify-content:space-between;margin-bottom:3px;}
+  .values-result-pole{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;}
+  .values-result-pole.left{color:var(--navy);}
+  .values-result-pole.right{color:var(--teal);}
+  .values-result-bar{position:relative;height:24px;background:var(--cream);border-radius:20px;overflow:visible;border:1px solid var(--border);}
+  .values-result-clusters{position:absolute;inset:0;display:grid;grid-template-columns:1fr 1fr 1fr;border-radius:20px;overflow:hidden;}
+  .values-result-zone{opacity:.35;}
+  .values-result-zone.z0{background:var(--navy);}
+  .values-result-zone.z1{background:#B0BEC8;}
+  .values-result-zone.z2{background:var(--teal);}
+  .values-result-zone.italy{background:var(--gold);opacity:.55;}
+  .values-result-marker{position:absolute;top:50%;transform:translate(-50%,-50%);font-size:.95rem;color:var(--navy);z-index:2;transition:left .8s ease;}
+  .values-result-label{display:flex;justify-content:space-between;align-items:center;margin-top:3px;}
+  .values-result-name{font-size:.74rem;font-weight:600;color:var(--ink);}
+  .values-result-pos{font-size:.7rem;color:var(--ink-light);}
+  .italy-note{background:#FFF8E8;border:1.5px solid rgba(246,171,15,.4);border-radius:10px;padding:14px 18px;margin-top:20px;font-size:.82rem;color:var(--ink-light);line-height:1.65;}
+  .italy-note strong{color:var(--gold-dark);}
     .header-inner{padding:12px 17px;}
     .hero,.assessment-wrap,.results-wrap,.review-wrap{padding-left:17px;padding-right:17px;}
     .subdim-block{padding:16px 17px;}
@@ -326,6 +390,11 @@
 <!-- ── ASSESSMENT ── -->
 <div class="screen" id="screenAssessment">
   <div class="assessment-wrap" id="assessmentContent"></div>
+</div>
+
+<!-- ── CULTURAL VALUES ── -->
+<div class="screen" id="screenValues">
+  <div id="valuesContent"></div>
 </div>
 
 <!-- ── REVIEW ── -->
@@ -488,7 +557,7 @@ function checkReady(){
 }
 function startAssessment(){
   name=document.getElementById('studentName').value.trim();
-  dimIdx=0; secondLook=''; R={};
+  dimIdx=0; secondLook=''; R={}; initCVR();
   DIM.forEach(d=>{
     R[d.id]={refl:'',italy:''};
     d.subdims.forEach(s=>{
@@ -505,7 +574,7 @@ function startAssessment(){
 function showScreen(id){ document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active')); document.getElementById(id).classList.add('active'); window.scrollTo(0,0); }
 function prog(p){ document.getElementById('progressBar').style.width=p+'%'; }
 function prevDim(){ saveDim(); if(dimIdx>0){dimIdx--;renderDim(dimIdx);}else{showScreen('screenIntro');prog(0);} }
-function nextDim(){ saveDim(); if(dimIdx<DIM.length-1){dimIdx++;renderDim(dimIdx);}else{showReview();} }
+function nextDim(){ saveDim(); if(dimIdx<DIM.length-1){dimIdx++;renderDim(dimIdx);}else{ if(mode==='t1'){showValuesScreen();}else{showReview();} } }
 function saveDim(){
   const d=DIM[dimIdx];
   d.subdims.forEach(s=>s.questions.forEach(q=>{
@@ -574,7 +643,7 @@ function renderDim(idx){
   h+=`<div class="nav-row">
     <button class="btn-back" onclick="prevDim()">← ${idx===0?'Back to Start':'Previous'}</button>
     <span class="section-progress">${idx+1} / ${DIM.length}</span>
-    <button class="btn-next" onclick="nextDim()">${idx<DIM.length-1?'Next →':'Review & Reflect →'}</button>
+    <button class="btn-next" onclick="nextDim()">${idx<DIM.length-1?'Next →':mode==='t1'?'Cultural Values →':'Review & Reflect →'}</button>
   </div></div>`;
   document.getElementById('assessmentContent').innerHTML=h;
 }
@@ -791,6 +860,46 @@ function showResults(){
   if(!isT2&&ita&&ita.trim())h+=`<div class="reflection-item"><div class="ri-dim">🇮🇹 Italian Culture Engagement</div><div class="ri-q">Your pre-departure Italian culture activity plan</div><div class="ri-a">"${ita}"</div></div>`;
   h+='</div>';
 
+  if(!isT2 && Object.values(cvR).some(d=>Object.values(d).some(v=>v>0))){
+    h+=`<div class="values-profile-card">
+      <h3>🌍 Your Cultural Value Orientations</h3>
+      <div class="card-sub">Your position on each of the 10 cultural value dimensions, compared to where major cultural clusters tend to fall. <span style="color:var(--gold-dark);font-weight:600;">Gold highlighting = Latin Europe (Italy)</span> — your destination culture.</div>`;
+    CV.forEach(d=>{
+      const score=calcCVScore(d);
+      const pct=scoreToPercent(score);
+      const italyZone=d.clusters.find(c=>c.italy)?.zone??1;
+      // build 3-zone bar; highlight italy zone
+      h+=`<div class="values-result-row">
+        <div class="values-result-poles">
+          <span class="values-result-pole left">${d.leftPole}</span>
+          <span class="values-result-pole right">${d.rightPole}</span>
+        </div>
+        <div class="values-result-bar">
+          <div class="values-result-clusters">
+            ${[0,1,2].map(z=>`<div class="values-result-zone ${z===italyZone?'italy':'z'+z}"></div>`).join('')}
+          </div>
+          <div class="values-result-marker" style="left:${score>0?pct+'%':'50%'}">${score>0?'▲':'?'}</div>
+        </div>
+        <div class="values-result-label">
+          <span class="values-result-name">${d.leftPole} ↔ ${d.rightPole}</span>
+          <span class="values-result-pos">${score>0?zoneLabel(score):'Not answered'}</span>
+        </div>
+      </div>`;
+    });
+    // Italy comparison note
+    const alignedCount=CV.filter(d=>{
+      const score=calcCVScore(d);
+      if(score<=0)return false;
+      const italyZone=d.clusters.find(c=>c.italy)?.zone??1;
+      const studentZone=score<3?0:score>5?2:1;
+      return studentZone===italyZone;
+    }).length;
+    const answered=CV.filter(d=>calcCVScore(d)>0).length;
+    h+=`<div class="italy-note">
+      <strong>🇮🇹 Italy (Latin Europe) check-in:</strong> Based on your responses, you align with the Latin Europe cluster on roughly <strong>${alignedCount} of ${answered}</strong> dimensions you answered. The dimensions where you diverge most are worth paying attention to — they're likely where you'll feel the most cultural friction, and the most growth, during your time in Italy.
+    </div></div>`;
+  }
+
   if(!isT2){
     h+=`<div class="dev-guide-card"><div class="dev-guide-header"><div class="dev-guide-eyebrow">Before You Arrive in Italy</div><h3>Ways to Develop Each Dimension</h3><p>Now that you have your baseline Cultural Intelligence profile, here are concrete activities for each dimension — things you can do before departure to start building your cross-cultural capability.</p></div>`;
     DIM.forEach(d=>{
@@ -854,7 +963,18 @@ function buildExport(S,isT2){
   DIM.forEach(d=>{const rf=R[d.id].refl;if(rf&&rf.trim())t+=`\n[${d.name}]\n${isT2?d.refl.t2:d.refl.t1}\n→ ${rf}\n`;});
   const ita=R['drive'].italy;if(!isT2&&ita&&ita.trim())t+=`\n[🇮🇹 Italian Culture Activity]\n→ ${ita}\n`;
   t+=`\n══════════════════════════════════\n`;
-  const co={name,date,scores:{}};DIM.forEach(d=>co.scores[d.id]=S[d.id]);
+  if(!isT2){
+    const cvAnswered=CV.filter(d=>calcCVScore(d)>0);
+    if(cvAnswered.length){
+      t+=`\nCULTURAL VALUE ORIENTATIONS (1=left pole, 7=right pole)\n─────────────────────────\n`;
+      CV.forEach(d=>{
+        const score=calcCVScore(d);
+        if(score>0) t+=`${d.leftPole} ↔ ${d.rightPole}: ${score} (${zoneLabel(score)})\n`;
+      });
+    }
+  }
+  const co={name,date,scores:{}};
+  DIM.forEach(d=>co.scores[d.id]=S[d.id]);
   return{text:t,code:btoa(JSON.stringify(co))};
 }
 function copyText(){
@@ -875,7 +995,298 @@ function selectCode(){
   }
 }
 
-// init
+// ═══════════════════════════════════
+// CULTURAL VALUES DATA
+// ═══════════════════════════════════
+// Each dimension: id, leftPole, rightPole, leftDesc, rightDesc
+// clusters: array of {name, zone: 0=left,1=mid,2=right, italy: bool}
+// questions: [{id,text,rev}] — scored 1-7, averaged → position 1-7 on spectrum
+const CV = [
+  { id:'indcol', leftPole:'Individualism', rightPole:'Collectivism',
+    leftDesc:'Emphasis on individual goals and rights', rightDesc:'Emphasis on group goals and relationships',
+    clusters:[
+      {name:'Anglo',zone:0},{name:'Germanic Europe',zone:0},{name:'Nordic Europe',zone:0},
+      {name:'Eastern Europe',zone:1},{name:'Latin Europe',zone:1,italy:true},
+      {name:'Arab',zone:2},{name:'Confucian Asia',zone:2},{name:'Latin America',zone:2},{name:'Southern Asia',zone:2},{name:'Sub-Saharan Africa',zone:2}
+    ],
+    questions:[
+      {id:'cv_ic1',text:'When making an important decision — about school, a job, a relationship — how much does the opinion of your family or close group factor into your final choice?',rev:false},
+      {id:'cv_ic2',text:'When your team does well on a group project, what feels most satisfying?',rev:false},
+      {id:'cv_ic3',text:'When a friend or family member needs help but it would seriously inconvenience you, your first instinct is to prioritize your own plans.',rev:true}
+    ],
+    scaleLeft:'I decide independently', scaleRight:'Their opinion is central to my choice'
+  },
+  { id:'powdis', leftPole:'Low Power Distance', rightPole:'High Power Distance',
+    leftDesc:'Emphasis on equality; shared decision-making', rightDesc:'Emphasis on differences in status; superiors decide',
+    clusters:[
+      {name:'Anglo',zone:0},{name:'Germanic Europe',zone:0},{name:'Nordic Europe',zone:0},
+      {name:'Confucian Asia',zone:1},{name:'Eastern Europe',zone:1},{name:'Latin Europe',zone:1,italy:true},{name:'Sub-Saharan Africa',zone:1},
+      {name:'Arab',zone:2},{name:'Latin America',zone:2},{name:'Southern Asia',zone:2}
+    ],
+    questions:[
+      {id:'cv_pd1',text:'When a professor, boss, or authority figure makes a decision you disagree with, how comfortable are you voicing that disagreement directly to them?',rev:true},
+      {id:'cv_pd2',text:'In a group setting, how natural does it feel to take initiative and act without waiting for someone in charge to direct things?',rev:true},
+      {id:'cv_pd3',text:'How much do you think a person\'s rank or title should influence how much weight their opinion gets in a discussion?',rev:false}
+    ],
+    scaleLeft:'Very comfortable speaking up', scaleRight:'I\'d keep it to myself'
+  },
+  { id:'uncavo', leftPole:'Low Uncertainty Avoidance', rightPole:'High Uncertainty Avoidance',
+    leftDesc:'Emphasis on flexibility and adaptability', rightDesc:'Emphasis on planning and predictability',
+    clusters:[
+      {name:'Anglo',zone:0},{name:'Eastern Europe',zone:0},{name:'Nordic Europe',zone:0},
+      {name:'Arab',zone:1},{name:'Confucian Asia',zone:1},{name:'Germanic Europe',zone:1},{name:'Southern Asia',zone:1},{name:'Sub-Saharan Africa',zone:1},
+      {name:'Latin Europe',zone:2,italy:true},{name:'Latin America',zone:2}
+    ],
+    questions:[
+      {id:'cv_ua1',text:'When you\'re about to do something new and unfamiliar with no clear instructions, how do you feel?',rev:false},
+      {id:'cv_ua2',text:'How much do you prefer having a detailed plan before starting a project versus figuring it out as you go?',rev:false},
+      {id:'cv_ua3',text:'I find it exciting when a situation turns out to be completely different from what I expected.',rev:true}
+    ],
+    scaleLeft:'Energized — I enjoy figuring it out', scaleRight:'Anxious — I need structure first'
+  },
+  { id:'coocom', leftPole:'Cooperative', rightPole:'Competitive',
+    leftDesc:'Emphasis on collaboration, nurturing, and family', rightDesc:'Emphasis on competition and achievement',
+    clusters:[
+      {name:'Nordic Europe',zone:0},{name:'Sub-Saharan Africa',zone:0},
+      {name:'Arab',zone:1},{name:'Confucian Asia',zone:1},{name:'Eastern Europe',zone:1},{name:'Latin America',zone:1},{name:'Latin Europe',zone:1,italy:true},{name:'Southern Asia',zone:1},
+      {name:'Anglo',zone:2},{name:'Germanic Europe',zone:2}
+    ],
+    questions:[
+      {id:'cv_cc1',text:'When you\'re working toward a goal alongside others, which feels more motivating?',rev:false},
+      {id:'cv_cc2',text:'How important is it to you personally to outperform your peers — in school, sports, work, or other areas?',rev:false},
+      {id:'cv_cc3',text:'When someone you know does significantly better than you at something you care about, how does it typically make you feel?',rev:false}
+    ],
+    scaleLeft:'Helping the group succeed together', scaleRight:'Being the one who performs best'
+  },
+  { id:'shlong', leftPole:'Short Term', rightPole:'Long Term',
+    leftDesc:'Emphasis on immediate outcomes (success now)', rightDesc:'Emphasis on long-term planning (success later)',
+    clusters:[
+      {name:'Anglo',zone:0},{name:'Arab',zone:0},{name:'Eastern Europe',zone:0},{name:'Nordic Europe',zone:0},{name:'Sub-Saharan Africa',zone:0},
+      {name:'Germanic Europe',zone:1},{name:'Latin America',zone:1},{name:'Latin Europe',zone:1,italy:true},{name:'Southern Asia',zone:1},
+      {name:'Confucian Asia',zone:2}
+    ],
+    questions:[
+      {id:'cv_sl1',text:'When you\'re making a financial decision — spending vs. saving — which tendency is more true of you right now?',rev:false},
+      {id:'cv_sl2',text:'How far into the future do you typically think when making a significant decision?',rev:false},
+      {id:'cv_sl3',text:'I\'d rather have a great experience now than sacrifice it for a future payoff that isn\'t guaranteed.',rev:true}
+    ],
+    scaleLeft:'I focus on enjoying the present', scaleRight:'I plan and save for the future'
+  },
+  { id:'dirind', leftPole:'Low Context / Direct', rightPole:'High Context / Indirect',
+    leftDesc:'Emphasis on explicit communication (words)', rightDesc:'Emphasis on indirect communication (tone, context)',
+    clusters:[
+      {name:'Anglo',zone:0},{name:'Germanic Europe',zone:0},{name:'Nordic Europe',zone:0},
+      {name:'Eastern Europe',zone:1},{name:'Latin America',zone:1},{name:'Latin Europe',zone:1,italy:true},
+      {name:'Arab',zone:2},{name:'Confucian Asia',zone:2},{name:'Southern Asia',zone:2},{name:'Sub-Saharan Africa',zone:2}
+    ],
+    questions:[
+      {id:'cv_di1',text:'When you\'re unhappy with someone\'s behavior, how do you typically handle it?',rev:false},
+      {id:'cv_di2',text:'When someone communicates with you, how much do you rely on what they explicitly say versus reading between the lines?',rev:false},
+      {id:'cv_di3',text:'When giving feedback to a friend or classmate about something they did poorly, what\'s your natural instinct?',rev:false}
+    ],
+    scaleLeft:'Address it directly — I say what I mean', scaleRight:'Read tone and context; soften or hint'
+  },
+  { id:'beido', leftPole:'Being', rightPole:'Doing',
+    leftDesc:'Emphasis on quality of life', rightDesc:'Emphasis on being busy and meeting goals',
+    clusters:[
+      {name:'Arab',zone:0},{name:'Latin America',zone:0},{name:'Nordic Europe',zone:0},{name:'Sub-Saharan Africa',zone:0},
+      {name:'Confucian Asia',zone:1},{name:'Eastern Europe',zone:1},{name:'Latin Europe',zone:1,italy:true},{name:'Southern Asia',zone:1},
+      {name:'Anglo',zone:2},{name:'Germanic Europe',zone:2}
+    ],
+    questions:[
+      {id:'cv_bd1',text:'On a free weekend with no obligations, what does a genuinely satisfying day look like to you?',rev:false},
+      {id:'cv_bd2',text:'How much does your sense of self-worth tie to how productive or accomplished you\'ve been recently?',rev:false},
+      {id:'cv_bd3',text:'I sometimes feel guilty when I\'m not being productive, even during time that\'s supposed to be for rest.',rev:false}
+    ],
+    scaleLeft:'Relaxing, being present, enjoying life', scaleRight:'Getting things done and making progress'
+  },
+  { id:'unipar', leftPole:'Universalism', rightPole:'Particularism',
+    leftDesc:'Emphasis on rules that apply to everyone', rightDesc:'Emphasis on unique standards based on relationships',
+    clusters:[
+      {name:'Anglo',zone:0},{name:'Germanic Europe',zone:0},{name:'Nordic Europe',zone:0},
+      {name:'Eastern Europe',zone:1},{name:'Latin Europe',zone:1,italy:true},
+      {name:'Arab',zone:2},{name:'Confucian Asia',zone:2},{name:'Latin America',zone:2},{name:'Southern Asia',zone:2},{name:'Sub-Saharan Africa',zone:2}
+    ],
+    questions:[
+      {id:'cv_up1',text:'A close friend has asked you to cover for them in a situation where telling the truth would get them in serious trouble. What feels more right?',rev:false},
+      {id:'cv_up2',text:'When enforcing rules or making decisions, how much should personal relationships factor in?',rev:false},
+      {id:'cv_up3',text:'Someone you don\'t know well breaks a rule. Someone you\'re close to breaks the same rule. Do you respond the same way to both?',rev:true}
+    ],
+    scaleLeft:'Tell the truth — rules apply to everyone', scaleRight:'Loyalty first — relationships matter more'
+  },
+  { id:'neuaff', leftPole:'Neutral / Non-Expressive', rightPole:'Affective / Expressive',
+    leftDesc:'Emphasis on non-emotional communication', rightDesc:'Emphasis on expressive communication',
+    clusters:[
+      {name:'Confucian Asia',zone:0},{name:'Eastern Europe',zone:0},{name:'Germanic Europe',zone:0},{name:'Nordic Europe',zone:0},
+      {name:'Anglo',zone:1},{name:'Southern Asia',zone:1},
+      {name:'Arab',zone:2},{name:'Latin America',zone:2},{name:'Latin Europe',zone:2,italy:true},{name:'Sub-Saharan Africa',zone:2}
+    ],
+    questions:[
+      {id:'cv_na1',text:'When you feel strongly about something — excited, frustrated, moved — how naturally do you express that emotion in the moment?',rev:false},
+      {id:'cv_na2',text:'In a professional or academic setting, how comfortable are you showing enthusiasm, frustration, or emotion openly?',rev:false},
+      {id:'cv_na3',text:'I tend to find it uncomfortable when people around me express strong emotions openly in social or professional settings.',rev:true}
+    ],
+    scaleLeft:'I keep it contained, even when I feel it', scaleRight:'I express it openly and naturally'
+  },
+  { id:'monpol', leftPole:'Monochronic / Linear', rightPole:'Polychronic / Non-Linear',
+    leftDesc:'One thing at a time; punctuality; work and personal life separate', rightDesc:'Multitasking; interruptions ok; work and personal combined',
+    clusters:[
+      {name:'Anglo',zone:0},{name:'Germanic Europe',zone:0},{name:'Nordic Europe',zone:0},
+      {name:'Confucian Asia',zone:1},{name:'Eastern Europe',zone:1},{name:'Southern Asia',zone:1},
+      {name:'Arab',zone:2},{name:'Latin America',zone:2},{name:'Latin Europe',zone:2,italy:true},{name:'Sub-Saharan Africa',zone:2}
+    ],
+    questions:[
+      {id:'cv_mp1',text:'How do you typically prefer to work?',rev:false},
+      {id:'cv_mp2',text:'How do you feel when plans change unexpectedly or someone is late to something you\'ve scheduled?',rev:true},
+      {id:'cv_mp3',text:'When you\'re spending time with someone and your phone keeps going off with other things, what do you do?',rev:false}
+    ],
+    scaleLeft:'One thing at a time; punctuality matters', scaleRight:'Multitasking; flexible with time'
+  }
+];
+
+// values responses: cvR[dimId][qId] = 1-7
+let cvR = {};
+
+function initCVR(){
+  cvR={};
+  CV.forEach(d=>{ cvR[d.id]={}; d.questions.forEach(q=>{ cvR[d.id][q.id]=0; }); });
+}
+
+// ═══════════════════════════════════
+// CULTURAL VALUES SCREEN
+// ═══════════════════════════════════
+function showValuesScreen(){
+  saveDim();
+  initCVR();
+  prog(82);
+  showScreen('screenValues');
+  renderValuesScreen();
+}
+
+function saveValuesResponses(){
+  CV.forEach(d=>{
+    d.questions.forEach(q=>{
+      const el=document.querySelector(`input[name="cvlk_${q.id}"]:checked`);
+      if(el) cvR[d.id][q.id]=+el.value;
+    });
+  });
+}
+
+function calcCVScore(d){
+  const vals=d.questions.map(q=>{
+    const r=cvR[d.id][q.id]||0;
+    return r>0?(q.rev?8-r:r):0;
+  }).filter(v=>v>0);
+  return vals.length?+(vals.reduce((a,b)=>a+b,0)/vals.length).toFixed(2):0;
+}
+
+function scoreToPercent(score){ return score>0?((score-1)/6*100):50; }
+
+function zoneLabel(score){
+  if(score<=0)return'—';
+  if(score<3)return'Left pole tendency';
+  if(score>5)return'Right pole tendency';
+  return'Middle / mixed';
+}
+
+function renderValuesScreen(){
+  let h=`<div class="values-wrap">
+    <div class="values-hero">
+      <div class="values-eyebrow">Section 5 of 5</div>
+      <h2>Your Cultural Value Orientations</h2>
+      <p>Beyond Cultural Intelligence, we each carry deep-seated value orientations shaped by our upbringing, culture, and experiences. For each dimension below, answer the questions honestly — your responses will reveal where you naturally fall on each spectrum, and how that compares to the tendencies of major cultural clusters around the world.</p>
+      <p style="margin-top:10px;font-size:.84rem;"><span style="display:inline-block;background:#FFF8E8;border:1px solid rgba(246,171,15,.4);border-radius:6px;padding:4px 10px;color:var(--gold-dark);font-weight:600;">🇮🇹 Latin Europe (Italy) is highlighted throughout</span> — as your destination culture, notice where it falls relative to your own tendencies.</p>
+    </div>`;
+
+  CV.forEach((d,di)=>{
+    const score=calcCVScore(d);
+    const pct=scoreToPercent(score);
+    h+=`<div class="values-dim-block">
+      <div class="values-dim-header">
+        <div class="values-dim-name">${d.leftPole} ↔ ${d.rightPole}</div>
+        <div class="values-poles"><span class="values-pole pole-left">${d.leftPole}</span><span class="values-pole pole-right">${d.rightPole}</span></div>
+        <div class="values-pole-desc"><span>${d.leftDesc}</span><span>${d.rightDesc}</span></div>
+      </div>
+
+      <div class="spectrum-wrap">
+        <div class="spectrum-clusters">
+          ${[0,1,2].map(zone=>{
+            const zoneClusters=d.clusters.filter(c=>c.zone===zone);
+            const hasItaly=zoneClusters.some(c=>c.italy);
+            return `<div class="spectrum-zone ${hasItaly?'italy-zone':''}">
+              <div class="spectrum-zone-label">${zone===0?d.leftPole.split('/')[0].trim():zone===2?d.rightPole.split('/')[0].trim():'Middle'}${hasItaly?'<span class="italy-badge">🇮🇹 Italy</span>':''}</div>
+              ${zoneClusters.map(c=>`<span class="cluster-tag ${c.italy?'latin-europe':''}">${c.name}${c.italy?'':''}</span><br>`).join('')}
+            </div>`;
+          }).join('')}
+        </div>
+        <div class="marker-bar-wrap" id="markerbar_${d.id}">
+          <div class="marker-bar-track"></div>
+          <div class="marker-bar-fill" style="width:${score>0?pct+'%':'0%'}"></div>
+          <div class="marker-triangle" style="left:${score>0?pct+'%':'50%'}">${score>0?'▲':'?'}</div>
+        </div>
+        <div class="marker-bar-labels"><span>${d.leftPole}</span><span>${d.rightPole}</span></div>
+      </div>
+
+      <div class="values-questions">
+        ${d.questions.map((q,qi)=>{
+          const sv=cvR[d.id][q.id]||0;
+          return `<div class="battery-item">
+            <div class="values-q-text">${q.text}</div>
+            <div class="values-scale-labels"><span>${d.scaleLeft}</span><span>${d.scaleRight}</span></div>
+            <div class="likert-wrap">
+              <div class="likert-options">
+                ${[1,2,3,4,5,6,7].map(n=>`<label class="likert-option">
+                  <input type="radio" name="cvlk_${q.id}" value="${n}" ${sv===n?'checked':''} onchange="updateMarker('${d.id}')">
+                  <div class="likert-btn">${n}</div>
+                </label>`).join('')}
+              </div>
+              <div class="likert-labels" style="margin-top:2px"><span>1 — ${d.leftPole.split('/')[0].trim()}</span><span>7 — ${d.rightPole.split('/')[0].trim()}</span></div>
+            </div>
+          </div>`;
+        }).join('')}
+      </div>
+    </div>`;
+  });
+
+  h+=`<div class="nav-row">
+    <button class="btn-back" onclick="backFromValues()">← Back</button>
+    <span class="section-progress">5 / 5</span>
+    <button class="btn-next" onclick="continueToReview()">Review & Reflect →</button>
+  </div></div>`;
+
+  document.getElementById('valuesContent').innerHTML=h;
+}
+
+function updateMarker(dimId){
+  // re-read all questions for this dim from DOM and update marker live
+  const d=CV.find(x=>x.id===dimId);
+  if(!d)return;
+  d.questions.forEach(q=>{
+    const el=document.querySelector(`input[name="cvlk_${q.id}"]:checked`);
+    if(el) cvR[d.id][q.id]=+el.value;
+  });
+  const score=calcCVScore(d);
+  const pct=scoreToPercent(score);
+  const fill=document.querySelector(`#markerbar_${dimId} .marker-bar-fill`);
+  const tri=document.querySelector(`#markerbar_${dimId} .marker-triangle`);
+  if(fill){fill.style.width=pct+'%';}
+  if(tri){tri.style.left=pct+'%';tri.textContent='▲';}
+}
+
+function backFromValues(){
+  saveValuesResponses();
+  dimIdx=DIM.length-1;
+  showScreen('screenAssessment');
+  renderDim(dimIdx);
+}
+
+function continueToReview(){
+  saveValuesResponses();
+  showReview();
+}
+
+// ═══════════════════════════════════
+// INIT
 selectMode('t1');
 </script>
 </body>

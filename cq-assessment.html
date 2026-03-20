@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cultural Intelligence Assessment · CIMBA Italy Summer 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream:#F7F8FA; --ink:#0D1B2E; --ink-light:#3D5166;
+    --navy:#1A3A5C; --navy-mid:#2E5F96;
+    --gold:#F6AB0F; --gold-dark:#C08A00;
+    --teal:#2A6B8A; --teal-light:#6AAFC8;
+    --border:#D8E0EA;
+    --shadow:rgba(13,27,46,0.08); --shadow-md:rgba(13,27,46,0.14); --shadow-strong:rgba(13,27,46,0.20);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);min-height:100vh;}
+
+  /* HEADER */
+  .site-header{background:var(--ink);position:sticky;top:0;z-index:100;box-shadow:0 2px 12px var(--shadow-strong);}
+  .header-inner{max-width:960px;margin:0 auto;padding:14px 32px;display:flex;align-items:center;justify-content:space-between;gap:16px;}
+  .header-title{font-family:'Playfair Display',serif;font-size:1.2rem;color:#fff;line-height:1.25;}
+  .header-title .subtitle{font-size:0.6rem;font-weight:600;letter-spacing:0.13em;text-transform:uppercase;color:var(--gold);font-family:'DM Sans',sans-serif;display:block;margin-bottom:3px;}
+  .header-title span{color:var(--gold);}
+  .mode-toggle{display:flex;gap:4px;background:rgba(255,255,255,0.08);border-radius:8px;padding:4px;flex-shrink:0;}
+  .mode-btn{padding:7px 15px;border:none;border-radius:6px;font-family:'DM Sans',sans-serif;font-size:0.76rem;font-weight:500;cursor:pointer;transition:all .2s;color:rgba(255,255,255,0.5);background:transparent;letter-spacing:.04em;text-transform:uppercase;}
+  .mode-btn.active{background:var(--gold);color:var(--ink);font-weight:600;}
+  .progress-wrap{background:rgba(255,255,255,0.06);height:3px;}
+  .progress-bar{height:3px;background:var(--gold);transition:width .4s ease;}
+
+  /* SCREENS */
+  .screen{display:none;} .screen.active{display:block;}
+
+  /* INTRO */
+  .hero{max-width:960px;margin:0 auto;padding:56px 32px 48px;}
+  .hero-eyebrow{font-size:0.7rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--navy);margin-bottom:13px;}
+  .hero h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,5vw,3.1rem);line-height:1.15;margin-bottom:20px;}
+  .hero h1 em{font-style:italic;color:var(--gold-dark);}
+  .hero-desc{font-size:.97rem;line-height:1.78;color:var(--ink-light);max-width:640px;margin-bottom:36px;}
+  .hero-desc strong{color:var(--ink);}
+
+  .mode-cards{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:32px;}
+  @media(max-width:560px){.mode-cards{grid-template-columns:1fr;}}
+  .mode-card{background:#fff;border:2px solid var(--border);border-radius:15px;padding:24px;cursor:pointer;transition:all .22s;position:relative;overflow:hidden;}
+  .mode-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;}
+  .mode-card.t1::before{background:var(--navy);} .mode-card.t2::before{background:var(--gold);}
+  .mode-card:hover{border-color:var(--navy);transform:translateY(-2px);box-shadow:0 8px 26px var(--shadow-md);}
+  .mode-card.selected{border-color:var(--navy);background:#F0F4F9;}
+  .mode-card.t2.selected{border-color:var(--gold-dark);background:#FDFAF0;}
+  .mc-check{position:absolute;top:16px;right:16px;width:21px;height:21px;border-radius:50%;background:var(--navy);display:none;align-items:center;justify-content:center;color:#fff;font-size:.68rem;}
+  .mode-card.t2 .mc-check{background:var(--gold-dark);}
+  .mode-card.selected .mc-check{display:flex;}
+  .mc-label{font-size:.64rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;margin-bottom:5px;}
+  .mode-card.t1 .mc-label{color:var(--navy);} .mode-card.t2 .mc-label{color:var(--gold-dark);}
+  .mc-title{font-family:'Playfair Display',serif;font-size:1.18rem;margin-bottom:7px;}
+  .mc-desc{font-size:.83rem;color:var(--ink-light);line-height:1.6;}
+
+  .t1-import{background:#EDF1F7;border:2px dashed var(--navy-mid);border-radius:13px;padding:20px 24px;margin-bottom:28px;}
+  .t1-import h3{font-family:'Playfair Display',serif;font-size:.98rem;color:var(--navy);margin-bottom:6px;}
+  .t1-import p{font-size:.83rem;color:var(--ink-light);margin-bottom:11px;line-height:1.6;}
+  .t1-import textarea{width:100%;padding:10px 13px;border:1.5px solid var(--navy-mid);border-radius:8px;font-family:'DM Sans',sans-serif;font-size:.83rem;background:#fff;resize:vertical;min-height:76px;outline:none;}
+  .t1-import textarea:focus{border-color:var(--navy);}
+  .import-btn{margin-top:8px;padding:7px 17px;background:var(--navy);color:#fff;border:none;border-radius:7px;font-family:'DM Sans',sans-serif;font-size:.82rem;font-weight:500;cursor:pointer;}
+  .import-btn:hover{background:#0D2840;}
+  .import-status{font-size:.76rem;color:var(--teal);margin-top:5px;font-weight:500;}
+
+  .name-row{display:flex;gap:13px;align-items:flex-end;flex-wrap:wrap;}
+  .name-field{flex:1;min-width:200px;}
+  .name-field label{display:block;font-size:.76rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-light);margin-bottom:6px;}
+  .name-field input{width:100%;padding:11px 14px;border:2px solid var(--border);border-radius:10px;font-family:'DM Sans',sans-serif;font-size:.97rem;background:#fff;color:var(--ink);outline:none;transition:border-color .2s;}
+  .name-field input:focus{border-color:var(--navy);}
+  .btn-start{padding:12px 32px;background:var(--navy);color:#fff;border:none;border-radius:10px;font-family:'DM Sans',sans-serif;font-size:.93rem;font-weight:600;cursor:pointer;transition:all .2s;white-space:nowrap;}
+  .btn-start:hover{background:#0D2840;transform:translateY(-1px);box-shadow:0 4px 14px rgba(13,27,46,.28);}
+  .btn-start:disabled{opacity:.38;cursor:not-allowed;transform:none;box-shadow:none;}
+
+  /* ASSESSMENT */
+  .assessment-wrap{max-width:960px;margin:0 auto;padding:38px 32px 60px;}
+  .dimension-header{display:flex;align-items:flex-start;gap:17px;margin-bottom:26px;padding-bottom:20px;border-bottom:2px solid var(--border);}
+  .dim-icon{width:50px;height:50px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.35rem;flex-shrink:0;}
+  .dim-number{font-size:.66rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;margin-bottom:3px;}
+  .dim-name{font-family:'Playfair Display',serif;font-size:1.7rem;line-height:1.2;margin-bottom:5px;}
+  .dim-tagline{font-size:.86rem;color:var(--ink-light);line-height:1.6;}
+  .color-drive{color:var(--navy);} .color-knowledge{color:var(--gold-dark);} .color-strategy{color:var(--teal);} .color-action{color:var(--navy-mid);}
+
+  .subdim-block{background:#fff;border-radius:13px;border:1.5px solid var(--border);padding:24px 28px;margin-bottom:16px;transition:box-shadow .2s;}
+  .subdim-block:hover{box-shadow:0 4px 16px var(--shadow-md);}
+  .subdim-title{font-weight:700;font-size:.96rem;margin-bottom:4px;}
+  .subdim-desc{font-size:.84rem;color:var(--ink-light);line-height:1.65;margin-bottom:14px;}
+
+  /* Battery */
+  .battery-questions{display:flex;flex-direction:column;gap:20px;}
+  .battery-item{padding-bottom:18px;border-bottom:1px dashed var(--border);}
+  .battery-item:last-child{border-bottom:none;padding-bottom:0;}
+  .battery-q-text{font-size:.89rem;font-weight:600;color:var(--ink);line-height:1.6;margin-bottom:13px;}
+  .reversed-badge{display:inline-block;font-size:.56rem;font-weight:700;letter-spacing:.05em;background:#EDF1F7;color:var(--navy);border-radius:4px;padding:1px 5px;margin-left:4px;vertical-align:middle;text-transform:uppercase;}
+
+  /* Likert */
+  .likert-wrap{display:flex;flex-direction:column;gap:4px;}
+  .likert-labels{display:flex;justify-content:space-between;font-size:.67rem;color:var(--ink-light);font-weight:500;}
+  .likert-options{display:flex;gap:6px;align-items:center;flex-wrap:wrap;}
+  .likert-option{display:flex;flex-direction:column;align-items:center;cursor:pointer;}
+  .likert-option input[type=radio]{display:none;}
+  .likert-btn{width:37px;height:37px;border-radius:50%;border:2px solid var(--border);background:#fff;display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:600;cursor:pointer;transition:all .16s;color:var(--ink-light);user-select:none;}
+  .likert-option:hover .likert-btn{border-color:var(--navy-mid);background:#EDF1F7;color:var(--navy);}
+  .likert-option input:checked + .likert-btn{background:var(--navy);border-color:var(--navy);color:#fff;transform:scale(1.12);box-shadow:0 2px 9px rgba(13,27,46,.22);}
+  .t2-mode .likert-option input:checked + .likert-btn{background:var(--teal);border-color:var(--teal);}
+  .t2-mode .likert-option:hover .likert-btn{border-color:var(--teal);background:#E8F4F8;color:var(--teal);}
+
+  /* Short answer */
+  .short-answer-wrap{margin-top:13px;animation:fadeIn .3s ease;}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(-5px);}to{opacity:1;transform:translateY(0);}}
+  .sa-label{font-size:.76rem;font-weight:600;color:var(--gold-dark);margin-bottom:6px;line-height:1.5;}
+  .sa-input{width:100%;padding:11px 13px;border:1.5px solid var(--border);border-radius:9px;font-family:'DM Sans',sans-serif;font-size:.87rem;color:var(--ink);background:var(--cream);resize:vertical;min-height:82px;outline:none;line-height:1.65;transition:border-color .2s;}
+  .sa-input:focus{border-color:var(--gold-dark);background:#fff;}
+
+  /* Reveal */
+  .subdim-reveal{margin-top:16px;padding-top:14px;border-top:1.5px dashed var(--border);animation:fadeIn .32s ease;}
+  .reveal-label{font-size:.64rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold-dark);margin-bottom:6px;}
+
+  /* Reflection */
+  .reflection-wrap{margin-top:4px;}
+  .reflection-label{font-size:.76rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-light);margin-bottom:7px;display:flex;align-items:center;gap:5px;}
+  .reflection-label .optional{font-weight:400;font-style:italic;text-transform:none;letter-spacing:0;color:#9AA;font-size:.71rem;}
+  .reflection-wrap textarea{width:100%;padding:12px 14px;border:1.5px solid var(--border);border-radius:10px;font-family:'DM Sans',sans-serif;font-size:.88rem;color:var(--ink);background:var(--cream);resize:vertical;min-height:96px;outline:none;line-height:1.65;transition:border-color .2s;}
+  .reflection-wrap textarea:focus{border-color:var(--navy);background:#fff;}
+
+  /* Italy activity */
+  .culture-prompt{background:#fff;border-radius:13px;border:2px solid var(--border);padding:26px;position:relative;overflow:hidden;}
+  .culture-prompt::before{content:'🇮🇹';position:absolute;right:20px;top:20px;font-size:2rem;opacity:.1;}
+  .culture-prompt h3{font-family:'Playfair Display',serif;font-size:1.1rem;margin-bottom:8px;}
+  .culture-prompt p{font-size:.84rem;color:var(--ink-light);line-height:1.7;margin-bottom:12px;}
+  .culture-prompt textarea{width:100%;padding:11px 13px;border:1.5px solid var(--border);border-radius:9px;font-family:'DM Sans',sans-serif;font-size:.87rem;background:var(--cream);resize:vertical;min-height:96px;outline:none;line-height:1.65;transition:border-color .2s;}
+  .culture-prompt textarea:focus{border-color:var(--navy);background:#fff;}
+
+  /* T2 retro box */
+  .subdim-example.retrospective{background:#EDF1F7;border-left:3px solid var(--navy);padding:11px 15px;border-radius:0 8px 8px 0;font-size:.83rem;color:var(--ink-light);margin-bottom:16px;line-height:1.65;}
+  .retro-label{display:block;font-size:.64rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--navy);margin-bottom:4px;}
+  .retro-question{margin-top:8px;font-size:.81rem;font-weight:600;color:var(--ink);}
+
+  /* Nav */
+  .nav-row{display:flex;justify-content:space-between;align-items:center;margin-top:30px;padding-top:20px;border-top:1.5px solid var(--border);}
+  .btn-back{padding:10px 24px;background:#fff;color:var(--ink);border:2px solid var(--border);border-radius:10px;font-family:'DM Sans',sans-serif;font-size:.91rem;font-weight:600;cursor:pointer;transition:all .2s;}
+  .btn-back:hover{border-color:var(--ink);}
+  .btn-next{padding:10px 24px;background:var(--navy);color:#fff;border:none;border-radius:10px;font-family:'DM Sans',sans-serif;font-size:.91rem;font-weight:600;cursor:pointer;transition:all .2s;}
+  .btn-next:hover{background:#0D2840;transform:translateY(-1px);box-shadow:0 4px 13px rgba(13,27,46,.24);}
+  .t2-mode .btn-next{background:var(--teal);} .t2-mode .btn-next:hover{background:#1E5570;}
+  .section-progress{font-size:.78rem;color:var(--ink-light);font-weight:500;}
+
+  /* REVIEW */
+  .review-wrap{max-width:960px;margin:0 auto;padding:46px 32px 68px;}
+  .review-hero{margin-bottom:32px;}
+  .review-eyebrow{font-size:.68rem;font-weight:600;letter-spacing:.13em;text-transform:uppercase;color:var(--gold-dark);margin-bottom:9px;}
+  .review-hero h2{font-family:'Playfair Display',serif;font-size:clamp(1.75rem,4vw,2.35rem);margin-bottom:11px;}
+  .review-hero p{font-size:.91rem;color:var(--ink-light);line-height:1.72;max-width:620px;}
+  .review-dim-block{background:#fff;border-radius:13px;border:1.5px solid var(--border);padding:22px 26px;margin-bottom:16px;}
+  .review-dim-title{font-family:'Playfair Display',serif;font-size:1.02rem;margin-bottom:14px;display:flex;align-items:center;gap:7px;}
+  .review-answer-item{margin-bottom:15px;padding-bottom:15px;border-bottom:1px dashed var(--border);}
+  .review-answer-item:last-child{margin-bottom:0;padding-bottom:0;border-bottom:none;}
+  .review-subdim-label{font-size:.64rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--navy);margin-bottom:2px;}
+  .review-prompt{font-size:.8rem;font-weight:600;color:var(--ink-light);margin-bottom:4px;}
+  .review-answer{font-size:.86rem;color:var(--ink);line-height:1.65;font-style:italic;background:var(--cream);border-radius:7px;padding:9px 12px;}
+  .review-empty{background:#FFF9EC;border:1.5px solid var(--gold);border-radius:11px;padding:18px 22px;font-size:.86rem;color:var(--ink-light);line-height:1.65;margin-bottom:22px;}
+  .second-look-card{background:#fff;border-radius:15px;border:2px solid var(--gold);padding:26px 30px;margin-bottom:26px;}
+  .sl-eyebrow{font-size:.65rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-dark);margin-bottom:9px;}
+  .sl-title{font-size:.91rem;font-weight:600;color:var(--ink);line-height:1.65;margin-bottom:13px;}
+  .sl-note{font-size:.73rem;color:#9AA;margin-top:8px;font-style:italic;}
+
+  /* RESULTS */
+  .results-wrap{max-width:960px;margin:0 auto;padding:46px 32px 76px;}
+  .results-hero{text-align:center;margin-bottom:40px;}
+  .results-hero .eyebrow{font-size:.68rem;font-weight:600;letter-spacing:.13em;text-transform:uppercase;color:var(--navy);margin-bottom:9px;}
+  .results-hero h2{font-family:'Playfair Display',serif;font-size:clamp(1.75rem,4vw,2.4rem);margin-bottom:9px;}
+  .results-hero p{font-size:.91rem;color:var(--ink-light);max-width:540px;margin:0 auto;line-height:1.7;}
+
+  .radar-card{background:#fff;border-radius:17px;border:1.5px solid var(--border);padding:30px;margin-bottom:26px;box-shadow:0 4px 20px var(--shadow);}
+  .radar-card h3{font-family:'Playfair Display',serif;font-size:1.1rem;margin-bottom:20px;text-align:center;}
+  #radarCanvas{display:block;margin:0 auto;max-width:400px;width:100%;}
+
+  .score-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:26px;}
+  @media(max-width:540px){.score-grid{grid-template-columns:1fr;}}
+  .score-card{background:#fff;border-radius:14px;border:1.5px solid var(--border);padding:20px;position:relative;overflow:hidden;}
+  .score-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:4px;}
+  .score-card.drive::after{background:var(--navy);} .score-card.knowledge::after{background:var(--gold);} .score-card.strategy::after{background:var(--teal);} .score-card.action::after{background:var(--navy-mid);}
+  .sc-label{font-size:.64rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:3px;}
+  .score-card.drive .sc-label{color:var(--navy);} .score-card.knowledge .sc-label{color:var(--gold-dark);} .score-card.strategy .sc-label{color:var(--teal);} .score-card.action .sc-label{color:var(--navy-mid);}
+  .sc-name{font-family:'Playfair Display',serif;font-size:1.08rem;margin-bottom:12px;}
+  .sc-overall{font-size:2.3rem;font-weight:300;line-height:1;margin-bottom:3px;}
+  .sc-overall span{font-size:.92rem;color:var(--ink-light);font-weight:400;}
+  .sc-bar-bg{height:5px;background:var(--border);border-radius:3px;overflow:hidden;margin:9px 0 13px;}
+  .sc-bar-fill{height:5px;border-radius:3px;transition:width 1s ease;}
+  .score-card.drive .sc-bar-fill{background:var(--navy);} .score-card.knowledge .sc-bar-fill{background:var(--gold);} .score-card.strategy .sc-bar-fill{background:var(--teal);} .score-card.action .sc-bar-fill{background:var(--navy-mid);}
+  .sc-subs{display:flex;flex-direction:column;gap:4px;}
+  .sc-sub-row{display:flex;justify-content:space-between;font-size:.76rem;}
+  .sc-sub-name{color:var(--ink-light);} .sc-sub-val{font-weight:600;}
+
+  .comparison-card{background:#fff;border-radius:14px;border:1.5px solid var(--border);padding:24px 28px;margin-bottom:26px;}
+  .comparison-card h3{font-family:'Playfair Display',serif;font-size:1.08rem;margin-bottom:16px;}
+  .comp-row{display:flex;align-items:center;gap:11px;margin-bottom:13px;font-size:.84rem;}
+  .comp-dim{width:82px;font-weight:600;color:var(--ink-light);flex-shrink:0;font-size:.78rem;}
+  .comp-bars{flex:1;display:flex;flex-direction:column;gap:4px;}
+  .comp-bar-row{display:flex;align-items:center;gap:6px;}
+  .comp-tag{font-size:.61rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;width:18px;color:var(--ink-light);}
+  .comp-bg{flex:1;height:9px;background:var(--border);border-radius:5px;overflow:hidden;}
+  .comp-fill{height:9px;border-radius:5px;}
+  .bg-drive{background:var(--navy);} .bg-knowledge{background:var(--gold);} .bg-strategy{background:var(--teal);} .bg-action{background:var(--navy-mid);}
+  .comp-val{width:24px;text-align:right;font-weight:600;font-size:.78rem;}
+  .comp-delta{width:48px;text-align:center;font-size:.74rem;font-weight:600;padding:2px 5px;border-radius:20px;flex-shrink:0;}
+  .comp-delta.up{background:#EDF7ED;color:#2E7D32;} .comp-delta.down{background:#FDECEA;color:#C62828;} .comp-delta.same{background:#F5F5F5;color:#999;}
+
+  .reflections-card,.short-answers-card{background:#fff;border-radius:14px;border:1.5px solid var(--border);padding:24px 28px;margin-bottom:26px;}
+  .reflections-card h3,.short-answers-card h3{font-family:'Playfair Display',serif;font-size:1.08rem;margin-bottom:16px;}
+  .reflection-item,.sa-result-item{margin-bottom:15px;padding-bottom:15px;border-bottom:1px dashed var(--border);}
+  .reflection-item:last-child,.sa-result-item:last-child{margin-bottom:0;padding-bottom:0;border-bottom:none;}
+  .ri-dim,.sa-result-dim{font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--navy);margin-bottom:2px;}
+  .sa-result-subdim{font-size:.64rem;font-weight:600;color:var(--teal);margin-bottom:3px;letter-spacing:.04em;text-transform:uppercase;}
+  .ri-q,.sa-result-prompt{font-weight:600;font-size:.83rem;margin-bottom:3px;color:var(--ink);}
+  .ri-a,.sa-result-answer{font-size:.85rem;color:var(--ink-light);line-height:1.65;font-style:italic;}
+  .sa-result-answer{background:var(--cream);border-radius:7px;padding:8px 12px;color:var(--ink);}
+
+  .second-look-result{background:#FDFAF0;border:1.5px solid var(--gold);border-radius:13px;padding:20px 24px;margin-bottom:26px;}
+  .second-look-result .sl-eyebrow{font-size:.65rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-dark);margin-bottom:5px;}
+  .second-look-result .sl-answer{font-size:.86rem;color:var(--ink);line-height:1.68;font-style:italic;}
+
+  .dev-guide-card{background:#fff;border-radius:17px;border:1.5px solid var(--border);padding:30px;margin-bottom:26px;box-shadow:0 4px 20px var(--shadow);}
+  .dev-guide-header{margin-bottom:22px;padding-bottom:16px;border-bottom:1.5px solid var(--border);}
+  .dev-guide-eyebrow{font-size:.65rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--gold-dark);margin-bottom:6px;}
+  .dev-guide-header h3{font-family:'Playfair Display',serif;font-size:1.2rem;margin-bottom:7px;}
+  .dev-guide-header p{font-size:.84rem;color:var(--ink-light);line-height:1.7;}
+  .dev-dim-block{margin-bottom:24px;} .dev-dim-block:last-child{margin-bottom:0;}
+  .dev-dim-title{display:flex;align-items:center;gap:7px;font-family:'Playfair Display',serif;font-size:.98rem;font-weight:700;margin-bottom:9px;}
+  .dev-subdims{display:flex;flex-direction:column;gap:8px;padding-left:4px;}
+  .dev-subdim-row{display:grid;grid-template-columns:155px 1fr;gap:9px;align-items:baseline;font-size:.84rem;}
+  @media(max-width:520px){.dev-subdim-row{grid-template-columns:1fr;gap:2px;}}
+  .dev-subdim-name{font-weight:600;color:var(--navy);font-size:.79rem;}
+  .dev-subdim-activity{color:var(--ink-light);line-height:1.6;}
+
+  .submit-card{background:var(--ink);color:var(--cream);border-radius:17px;padding:32px;}
+  .submit-card-header{text-align:center;margin-bottom:24px;}
+  .submit-card-header h3{font-family:'Playfair Display',serif;font-size:1.3rem;margin-bottom:7px;color:#fff;}
+  .submit-card-header p{font-size:.86rem;color:rgba(255,255,255,.58);line-height:1.65;}
+  .submit-step{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.11);border-radius:12px;padding:20px 22px;margin-bottom:14px;}
+  .submit-step-label{font-size:.6rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--gold);margin-bottom:5px;}
+  .submit-step-title{font-size:.92rem;font-weight:600;color:#fff;margin-bottom:4px;}
+  .submit-step-desc{font-size:.78rem;color:rgba(255,255,255,.52);line-height:1.62;margin-bottom:12px;}
+  .export-box{background:rgba(0,0,0,.22);border:1px solid rgba(255,255,255,.09);border-radius:8px;padding:12px 15px;text-align:left;font-size:.72rem;color:rgba(255,255,255,.68);line-height:1.7;margin-bottom:10px;font-family:'DM Sans',sans-serif;max-height:190px;overflow-y:auto;white-space:pre-wrap;word-break:break-word;}
+  .code-box{background:rgba(246,171,15,.07);border:1.5px solid rgba(246,171,15,.3);border-radius:8px;padding:12px 15px;text-align:left;font-size:.72rem;color:rgba(255,255,255,.88);line-height:1.5;margin-bottom:10px;font-family:monospace;word-break:break-all;letter-spacing:.01em;user-select:all;cursor:text;}
+  .code-box-hint{font-size:.7rem;color:rgba(246,171,15,.7);margin-bottom:8px;font-style:italic;}
+  .btn-copy{padding:9px 20px;background:var(--gold);color:var(--ink);border:none;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:.84rem;font-weight:600;cursor:pointer;transition:all .2s;margin-right:7px;margin-bottom:5px;}
+  .btn-copy:hover{background:#D49A0A;}
+  .btn-copy.ghost{background:rgba(255,255,255,.1);color:rgba(255,255,255,.75);}
+  .btn-copy.ghost:hover{background:rgba(255,255,255,.18);color:#fff;}
+  .copied-toast{display:inline-block;font-size:.72rem;color:#8BC34A;margin-top:5px;opacity:0;transition:opacity .3s;}
+  .copied-toast.show{opacity:1;}
+  .submit-footer{text-align:center;margin-top:18px;padding-top:18px;border-top:1px solid rgba(255,255,255,.1);}
+  .btn-restart{padding:10px 22px;background:transparent;color:rgba(255,255,255,.55);border:1.5px solid rgba(255,255,255,.18);border-radius:9px;font-family:'DM Sans',sans-serif;font-size:.88rem;font-weight:500;cursor:pointer;transition:all .2s;}
+  .btn-restart:hover{border-color:rgba(255,255,255,.5);color:#fff;}
+
+  @media(max-width:660px){
+    .header-inner{padding:12px 17px;}
+    .hero,.assessment-wrap,.results-wrap,.review-wrap{padding-left:17px;padding-right:17px;}
+    .subdim-block{padding:16px 17px;}
+    .likert-btn{width:32px;height:32px;font-size:.74rem;}
+    .likert-options{gap:4px;}
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <div class="header-title">
+      <span class="subtitle">CIMBA Italy · Summer 2026 · International Marketing</span>
+      Cultural <span>Intelligence</span> Assessment
+    </div>
+    <div class="mode-toggle">
+      <button class="mode-btn active" id="headerT1Btn" onclick="switchMode('t1')">Pre (T1)</button>
+      <button class="mode-btn" id="headerT2Btn" onclick="switchMode('t2')">Post (T2)</button>
+    </div>
+  </div>
+  <div class="progress-wrap"><div class="progress-bar" id="progressBar" style="width:0%"></div></div>
+</header>
+
+<!-- ── INTRO ── -->
+<div class="screen active" id="screenIntro">
+  <div class="hero">
+    <div class="hero-eyebrow">CIMBA Italy · Summer Session 2026 · International Marketing</div>
+    <h1>How ready are you to<br><em>cross cultures?</em></h1>
+    <p class="hero-desc">This assessment measures your <strong>Cultural Intelligence (CQ)</strong> — your capability to function effectively across cultural contexts. There are four dimensions: <strong>Drive</strong> (motivation), <strong>Knowledge</strong> (understanding), <strong>Strategy</strong> (planning), and <strong>Action</strong> (adaptability). Answer honestly — there are no right or wrong answers, and your profile will anchor your reflection throughout the course.</p>
+
+    <div class="mode-cards">
+      <div class="mode-card t1" id="t1Card" onclick="selectMode('t1')">
+        <div class="mc-check">✓</div>
+        <div class="mc-label">Before the Course</div>
+        <div class="mc-title">T1 · Pre-Assessment</div>
+        <div class="mc-desc">Complete this 3–4 weeks before arriving in Italy. Sets your baseline Cultural Intelligence profile and prepares you for your first day of class.</div>
+      </div>
+      <div class="mode-card t2" id="t2Card" onclick="selectMode('t2')">
+        <div class="mc-check">✓</div>
+        <div class="mc-label">After the Course</div>
+        <div class="mc-title">T2 · Post-Assessment</div>
+        <div class="mc-desc">Complete this during the final week of class. Reflects on your Cultural Intelligence growth and informs your written final exam.</div>
+      </div>
+    </div>
+
+    <div id="t2ImportSection" style="display:none">
+      <div class="t1-import">
+        <h3>📋 Import Your T1 Scores</h3>
+        <p>To compare your T1 and T2 scores side-by-side, paste your T1 export code below. You can find it in your <strong>Canvas T1 submission</strong> — it's the long string of characters you submitted at the end of the pre-assessment. This step is optional but strongly recommended.</p>
+        <textarea id="t1ImportText" placeholder="Paste your T1 export code here…"></textarea><br>
+        <button class="import-btn" onclick="importT1Scores()">Import T1 Scores</button>
+        <div class="import-status" id="importStatus"></div>
+      </div>
+    </div>
+
+    <div class="name-row">
+      <div class="name-field">
+        <label>Your Full Name</label>
+        <input type="text" id="studentName" placeholder="e.g. Maria Rossi" oninput="checkStartReady()">
+      </div>
+      <button class="btn-start" id="startBtn" onclick="startAssessment()" disabled>Begin Assessment →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── ASSESSMENT ── -->
+<div class="screen" id="screenAssessment">
+  <div class="assessment-wrap" id="assessmentContent"></div>
+</div>
+
+<!-- ── REVIEW ── -->
+<div class="screen" id="screenReview">
+  <div id="reviewContent"></div>
+</div>
+
+<!-- ── RESULTS ── -->
+<div class="screen" id="screenResults">
+  <div class="results-wrap" id="resultsContent"></div>
+</div>
+
+<script>
+// ═══════════════════════════════════
+// DATA
+// ═══════════════════════════════════
+const DIM = [
+  { id:'drive', name:'CQ Drive', icon:'🔥', tagline:'Your motivation, curiosity, and confidence in multicultural situations.', color:'var(--navy)',
+    subdims:[
+      { id:'intrinsic', name:'Intrinsic Interest', desc:'The genuine enjoyment and curiosity you feel when engaging with people from different cultural backgrounds.',
+        example:'Participate in an activity with someone from a different culture — attend a cultural festival, try a new cuisine with a local, or explore an art form or tradition that isn\'t your own.',
+        questions:[
+          {id:'q_intr1', text:'When I find out a classmate or neighbor grew up in a very different cultural context than me, my first instinct is curiosity rather than indifference.', rev:false, sa:null},
+          {id:'q_intr2', text:'I seek out music, food, films, or events from other cultures on my own — not because it\'s assigned or expected, but because I actually want to.', rev:false, sa:'Give a recent example — what did you seek out, and what drew you to it?'},
+          {id:'q_intr3', text:'I tend to feel more comfortable spending time with people who share my cultural background than with people from very different ones.', rev:true, sa:null}
+        ]},
+      { id:'extrinsic', name:'Extrinsic Interest', desc:'Your awareness of the practical benefits — professional, academic, and personal — that come from multicultural experience.',
+        example:'After your next cross-cultural encounter, write down 2–3 specific things you learned or gained — and think about how they might be useful to you going forward.',
+        questions:[
+          {id:'q_extr1', text:'I can point to specific ways that cross-cultural experience has already paid off for me — in friendships, opportunities, or how I think about problems.', rev:false, sa:'Describe one specific example — what was the experience and what did you gain from it?'},
+          {id:'q_extr2', text:'Honestly, I don\'t think navigating cultural differences will matter much in the career path I\'m planning.', rev:true, sa:null},
+          {id:'q_extr3', text:'When I have the option between an experience that\'s familiar and one that stretches my cultural comfort zone, I tend to choose the stretch.', rev:false, sa:null}
+        ]},
+      { id:'efficacy', name:'Self-Efficacy', desc:'Your confidence in your ability to navigate and be effective in unfamiliar cultural situations.',
+        example:'Have a meal or coffee with someone from a different background — notice where you feel comfortable and where you feel stretched. Reflect on it afterward.',
+        questions:[
+          {id:'q_effi1', text:'When I\'m in a social situation where I\'m clearly the cultural outsider, I trust myself to figure things out without shutting down.', rev:false, sa:'Briefly describe a time you were the cultural outsider. What did you do?'},
+          {id:'q_effi2', text:'The thought of accidentally offending someone from a different cultural background genuinely makes me want to avoid those situations.', rev:true, sa:null},
+          {id:'q_effi3', text:'If I made an awkward cultural mistake in front of others, I think I could recover and move forward without it derailing the interaction.', rev:false, sa:null}
+        ]}
+    ],
+    refl:{t1:'Before arriving in Italy, what draws you to this cross-cultural experience? What are you most curious or nervous about?',
+          t2:'How did your motivation and confidence evolve over four weeks? Was there a moment that surprised you?'},
+    italy:true },
+
+  { id:'knowledge', name:'CQ Knowledge', icon:'📚', tagline:'Your understanding of how cultures differ — in values, norms, business, and communication.', color:'var(--gold-dark)',
+    subdims:[
+      { id:'business', name:'Business Systems', desc:'Your familiarity with how economic, legal, and organizational systems differ across cultures.',
+        example:'Read a local news site from another country for a week — notice what economic or political assumptions feel different from your own.',
+        questions:[
+          {id:'q_busi1', text:'I have a general sense of how business practices or professional expectations in other countries might differ from what I\'ve grown up around.', rev:false, sa:null},
+          {id:'q_busi2', text:'If someone asked me to explain how economic or legal systems vary across cultures, I\'d have very little to say.', rev:true, sa:null},
+          {id:'q_busi3', text:'I have enough background knowledge that if I were doing a semester project involving a company in another country, I\'d know what cultural-economic questions to start asking.', rev:false, sa:null}
+        ]},
+      { id:'valuesnorms', name:'Values & Norms', desc:'Your knowledge of the deeply-held values, social expectations, and religious beliefs that shape behavior in different cultures.',
+        example:'Read The Culture Map by Erin Meyer — or explore one chapter — and map where your own culture sits on at least two of the dimensions she describes.',
+        questions:[
+          {id:'q_valn1', text:'I can describe at least one concrete way that cultures differ in how they balance individual goals against group harmony.', rev:false, sa:'Describe the example you have in mind — what cultures, and what did you observe or learn?'},
+          {id:'q_valn2', text:'I\'ve encountered situations — in real life, through travel, or through media — where someone\'s behavior only made sense once I understood their cultural values.', rev:false, sa:'Briefly describe the situation — what happened, and what cultural insight helped it make sense?'},
+          {id:'q_valn3', text:'Most of the time, I find that people\'s core social values are pretty much the same regardless of where they\'re from.', rev:true, sa:null}
+        ]},
+      { id:'socioling', name:'Socio-Linguistics', desc:'Your knowledge of how language, communication styles, and contextual cues vary across cultures.',
+        example:'Learn 10–15 basic Italian words or phrases — greetings, courtesies, common expressions. Notice how the structure or feel of the language differs from English.',
+        questions:[
+          {id:'q_soci1', text:'I understand that some cultures communicate very directly while others rely heavily on context, silence, and what\'s left unsaid — and I can give an example.', rev:false, sa:'What\'s the example you have in mind? Where does it come from — personal experience, something you\'ve studied, or something you\'ve observed?'},
+          {id:'q_soci2', text:'I haven\'t really paid much attention to how language and communication styles vary across cultures.', rev:true, sa:null},
+          {id:'q_soci3', text:'I\'m aware that a gesture, phrase, or expression that\'s perfectly normal in one culture can be confusing or offensive in another.', rev:false, sa:'Give a specific example — what gesture or expression, and between which cultural contexts?'}
+        ]},
+      { id:'leadership', name:'Leadership Across Cultures', desc:'Your understanding of how management, hierarchy, and relationship-building norms vary across cultural contexts.',
+        example:'Talk to an international student or someone who has lived abroad — ask what surprised them most about how teams or groups functioned differently than they expected.',
+        questions:[
+          {id:'q_lead1', text:'I\'ve noticed — in classes, group projects, or team settings — that people have genuinely different assumptions about who should lead and how decisions should get made.', rev:false, sa:'Briefly describe what you noticed — what was the situation and what differed?'},
+          {id:'q_lead2', text:'In my experience, a good leader is a good leader regardless of cultural context — the fundamentals are basically universal.', rev:true, sa:null},
+          {id:'q_lead3', text:'I can imagine that working closely on a team with someone from a very different cultural background might require me to rethink some of my default assumptions about how groups function.', rev:false, sa:null}
+        ]}
+    ],
+    refl:{t1:'What do you already know about Italian culture? Where do you sense your knowledge gaps are largest?',
+          t2:'What was the most significant cultural insight you gained in Italy — something that genuinely surprised or challenged your prior understanding?'} },
+
+  { id:'strategy', name:'CQ Strategy', icon:'🧭', tagline:'Your awareness and ability to plan for — and reflect on — multicultural interactions.', color:'var(--teal)',
+    subdims:[
+      { id:'planning', name:'Planning', desc:'Your tendency to prepare intentionally before entering cross-cultural encounters — researching, anticipating, and strategizing.',
+        example:'Before arriving in Italy, write a short list of 3 things you expect might feel culturally unfamiliar — then revisit that list once you arrive and see how you did.',
+        questions:[
+          {id:'q_plan1', text:'Before going somewhere new or spending significant time with people from an unfamiliar cultural background, I tend to do some informal research — even just a quick look at what to expect.', rev:false, sa:'Think of a recent example — where were you going or who were you meeting, and what did you do to prepare?'},
+          {id:'q_plan2', text:'When I know a situation might be culturally unfamiliar, I find myself thinking through potential awkward moments before they happen.', rev:false, sa:null},
+          {id:'q_plan3', text:'I usually just figure cultural situations out as I go — I don\'t really think about them in advance.', rev:true, sa:null}
+        ]},
+      { id:'awareness', name:'Awareness', desc:'Your ability to stay present and notice both your own reactions and others\' perspectives during cross-cultural encounters.',
+        example:'After your next cross-cultural interaction, pause and ask yourself: What did I notice? What surprised me? What assumptions did I bring in?',
+        questions:[
+          {id:'q_awar1', text:'During interactions with people from different cultural backgrounds, I notice cues — body language, hesitation, word choice — that tell me something culturally significant might be happening.', rev:false, sa:null},
+          {id:'q_awar2', text:'I catch myself in the middle of cross-cultural interactions thinking about how I\'m coming across, not just how the other person seems to me.', rev:false, sa:null},
+          {id:'q_awar3', text:'When I\'m focused on getting something done, I don\'t really have bandwidth to think about the cultural dynamics of the interaction at the same time.', rev:true, sa:null}
+        ]},
+      { id:'checking', name:'Checking', desc:'Your ability to notice when your cultural assumptions are wrong and update your mental model accordingly.',
+        example:'After a cross-cultural encounter that felt "off," pause and ask: What assumption did I bring in that might have been wrong? Write it down.',
+        questions:[
+          {id:'q_chec1', text:'When a cross-cultural interaction goes unexpectedly, my first instinct is to ask what I might have misread rather than assuming the other person was being strange.', rev:false, sa:null},
+          {id:'q_chec2', text:'I can think of a specific time when my mental model of a cultural group turned out to be wrong — and I updated it.', rev:false, sa:'Describe the situation — what did you assume going in, and what changed your mind?'},
+          {id:'q_chec3', text:'Once I\'ve formed an impression of how a particular culture operates, it takes a lot to change my mind.', rev:true, sa:null}
+        ]}
+    ],
+    refl:{t1:'How do you typically prepare for unfamiliar situations? How might you apply that to navigating Italian culture?',
+          t2:'How did your metacognitive approach to cross-cultural situations shift over four weeks? What strategies proved most useful?'} },
+
+  { id:'action', name:'CQ Action', icon:'🎭', tagline:'Your flexibility in adapting behavior — verbal, nonverbal, and communicative — across cultural contexts.', color:'var(--navy-mid)',
+    subdims:[
+      { id:'speech', name:'Speech Acts', desc:'Your ability to adapt the manner and content of your communication — shifting between direct and indirect, formal and informal.',
+        example:'Practice shifting between direct and indirect communication in a single day — notice when you naturally do this already, and try it deliberately in one new situation.',
+        questions:[
+          {id:'q_spee1', text:'I adjust how direct or indirect I am depending on the relationship, stakes, and context of a conversation — it doesn\'t feel forced.', rev:false, sa:null},
+          {id:'q_spee2', text:'I tend to communicate pretty much the same way regardless of who I\'m talking to — it\'s just how I express myself.', rev:true, sa:null},
+          {id:'q_spee3', text:'When I need to deliver uncomfortable feedback or navigate a sensitive topic, I can adjust how I frame it depending on the person and situation.', rev:false, sa:'Think of a recent time you had to deliver something difficult or uncomfortable. How did you adjust your approach for that person or situation?'}
+        ]},
+      { id:'verbal', name:'Verbal Behaviors', desc:'Your ability to modify pace, tone, volume, and expressiveness of speech to match cultural norms.',
+        example:'Record a short voice memo of yourself explaining something casually, then re-record it as if speaking to a professor, then to a child. Listen back and notice what changes.',
+        questions:[
+          {id:'q_verb1', text:'I naturally shift my pace, volume, or level of formality depending on who I\'m with — a professor, a close friend, a stranger from another country.', rev:false, sa:null},
+          {id:'q_verb2', text:'When I\'m with someone who communicates very differently from me — much quieter, much more formal, much more expressive — I can adjust my style to meet them partway.', rev:false, sa:'Describe a specific person or situation where this came up — what was different about how they communicated, and what did you do?'},
+          {id:'q_verb3', text:'I\'ve been told — or I\'ve noticed myself — that I don\'t really change how I communicate depending on the audience.', rev:true, sa:null}
+        ]},
+      { id:'nonverbal', name:'Nonverbal Behaviors', desc:'Your ability to adapt gestures, eye contact, personal space, and other nonverbal cues appropriately across cultural contexts.',
+        example:'Choose one nonverbal behavior that might feel unfamiliar — a different level of eye contact, a greeting gesture, a different physical distance — and practice it deliberately in one low-stakes interaction.',
+        questions:[
+          {id:'q_nonv1', text:'I\'m aware that my default habits around eye contact, personal space, and physical greetings might feel very different to someone from another cultural background.', rev:false, sa:null},
+          {id:'q_nonv2', text:'I can dial my nonverbal behavior up or down — more or less expressive, more or less physical — when I sense the situation calls for it.', rev:false, sa:null},
+          {id:'q_nonv3', text:'I don\'t really think about my body language or nonverbal habits — I just act naturally and assume others will adjust.', rev:true, sa:null}
+        ]}
+    ],
+    refl:{t1:'Think about a time you felt culturally "out of sync" in a conversation or social situation. What happened? What did you do?',
+          t2:'Describe a specific moment in Italy where you consciously adapted your behavior to fit the cultural context. What did you do differently, and what was the result?'} }
+];
+
+// ═══════════════════════════════════
+// STATE
+// ═══════════════════════════════════
+let mode='t1', dimIdx=0, name='', R={}, secondLook='', t1Scores=null;
+
+// ═══════════════════════════════════
+// INIT
+// ═══════════════════════════════════
+function selectMode(m){
+  mode=m;
+  document.getElementById('t1Card').classList.toggle('selected',m==='t1');
+  document.getElementById('t2Card').classList.toggle('selected',m==='t2');
+  document.getElementById('t2ImportSection').style.display=m==='t2'?'block':'none';
+  checkReady();
+}
+function switchMode(m){
+  selectMode(m);
+  document.getElementById('headerT1Btn').classList.toggle('active',m==='t1');
+  document.getElementById('headerT2Btn').classList.toggle('active',m==='t2');
+  showScreen('screenIntro'); R={}; secondLook=''; dimIdx=0; prog(0);
+}
+function checkReady(){
+  const n=document.getElementById('studentName').value.trim();
+  const sel=document.getElementById('t1Card').classList.contains('selected')||document.getElementById('t2Card').classList.contains('selected');
+  document.getElementById('startBtn').disabled=n.length<2||!sel;
+}
+function startAssessment(){
+  name=document.getElementById('studentName').value.trim();
+  dimIdx=0; secondLook=''; R={};
+  DIM.forEach(d=>{
+    R[d.id]={refl:'',italy:''};
+    d.subdims.forEach(s=>{
+      R[d.id][s.id]={};
+      s.questions.forEach(q=>{ R[d.id][s.id][q.id]=0; if(q.sa) R[d.id][s.id][q.id+'_sa']=''; });
+    });
+  });
+  showScreen('screenAssessment'); renderDim(0);
+}
+
+// ═══════════════════════════════════
+// NAVIGATION
+// ═══════════════════════════════════
+function showScreen(id){ document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active')); document.getElementById(id).classList.add('active'); window.scrollTo(0,0); }
+function prog(p){ document.getElementById('progressBar').style.width=p+'%'; }
+function prevDim(){ saveDim(); if(dimIdx>0){dimIdx--;renderDim(dimIdx);}else{showScreen('screenIntro');prog(0);} }
+function nextDim(){ saveDim(); if(dimIdx<DIM.length-1){dimIdx++;renderDim(dimIdx);}else{showReview();} }
+function saveDim(){
+  const d=DIM[dimIdx];
+  d.subdims.forEach(s=>s.questions.forEach(q=>{
+    const el=document.querySelector(`input[name="lk_${q.id}"]:checked`);
+    if(el) R[d.id][s.id][q.id]=+el.value;
+    if(q.sa){const sa=document.getElementById('sa_'+q.id);if(sa)R[d.id][s.id][q.id+'_sa']=sa.value;}
+  }));
+  const rf=document.getElementById('refl_'+d.id); if(rf)R[d.id].refl=rf.value;
+  const it=document.getElementById('italyTxt'); if(it)R[d.id].italy=it.value;
+}
+
+// ═══════════════════════════════════
+// RENDER DIMENSION
+// ═══════════════════════════════════
+function renderDim(idx){
+  const d=DIM[idx], isT2=mode==='t2';
+  prog(Math.round(idx/5*100)); window.scrollTo(0,0);
+  let h=`<div class="${isT2?'t2-mode':''}">
+    <div class="dimension-header">
+      <div class="dim-icon" style="background:${d.color}18;color:${d.color}">${d.icon}</div>
+      <div>
+        <div class="dim-number color-${d.id}">Dimension ${idx+1} of 4</div>
+        <div class="dim-name">${d.name}</div>
+        <div class="dim-tagline">${d.tagline}</div>
+      </div>
+    </div>`;
+
+  d.subdims.forEach(s=>{
+    const anyAns=s.questions.some(q=>R[d.id][s.id][q.id]>0);
+    if(isT2){
+      h+=`<div class="subdim-block">
+        <div class="subdim-title">${s.name}</div>
+        <div class="subdim-desc">${s.desc}</div>
+        <div class="subdim-example retrospective">
+          <span class="retro-label">Before Italy, you were suggested:</span>${s.example}
+          <div class="retro-question">Did you do something like this — or experience something similar in Italy?</div>
+        </div>
+        <div class="battery-questions">${s.questions.map(q=>qHtml(q,d.id,s.id,true)).join('')}</div>
+      </div>`;
+    } else {
+      h+=`<div class="subdim-block">
+        <div class="battery-questions">${s.questions.map(q=>qHtml(q,d.id,s.id,false)).join('')}</div>
+        <div id="rv_${s.id}" class="subdim-reveal" style="display:${anyAns?'block':'none'}">
+          <div class="reveal-label">What this measures</div>
+          <div class="subdim-title" style="margin-bottom:4px">${s.name}</div>
+          <div class="subdim-desc" style="margin-bottom:0">${s.desc}</div>
+        </div>
+      </div>`;
+    }
+  });
+
+  h+=`<div class="reflection-wrap" style="margin-top:8px">
+    <div class="reflection-label">Reflection Prompt <span class="optional">(required — informs your final exam)</span></div>
+    <textarea id="refl_${d.id}" placeholder="${isT2?d.refl.t2:d.refl.t1}">${R[d.id].refl||''}</textarea>
+  </div>`;
+
+  if(d.italy&&!isT2){
+    h+=`<div class="culture-prompt" style="margin-top:20px">
+      <h3>🇮🇹 Italian Culture Engagement Activity</h3>
+      <p>Before you arrive in Italy, engage with Italian culture in some way and share what you discovered. Think about what you'd like to explore — food, art, language, design, history, film, music, fashion, football. <strong>Describe what you plan to do (or have already done) to engage with Italian culture before departure.</strong></p>
+      <p style="margin-top:8px">You'll document this with a <strong>photo + caption uploaded to the shared Google Slides deck by Monday, May 4th</strong> — photo on the slide, caption in the notes section. We'll review these together on the first day of class.</p>
+      <textarea id="italyTxt" placeholder="What will you do to engage with Italian culture before arriving? What are you curious about? What did you discover?">${R[d.id].italy||''}</textarea>
+    </div>`;
+  }
+
+  h+=`<div class="nav-row">
+    <button class="btn-back" onclick="prevDim()">← ${idx===0?'Back to Start':'Previous'}</button>
+    <span class="section-progress">${idx+1} / ${DIM.length}</span>
+    <button class="btn-next" onclick="nextDim()">${idx<DIM.length-1?'Next →':'Review & Reflect →'}</button>
+  </div></div>`;
+  document.getElementById('assessmentContent').innerHTML=h;
+}
+
+function qHtml(q,did,sid,isT2){
+  const sv=R[did][sid][q.id]||0, sa=(q.sa&&R[did][sid][q.id+'_sa'])||'', saVis=sv>0||sa.length>0;
+  const oc=isT2?'':`onchange="onRate('rv_${sid}','sawrap_${q.id}')"`;
+  return `<div class="battery-item">
+    <div class="battery-q-text">${q.text}${q.rev&&isT2?' <span class="reversed-badge">R</span>':''}</div>
+    <div class="likert-wrap">
+      <div class="likert-labels" style="margin-bottom:5px"><span>Strongly Disagree</span><span>Strongly Agree</span></div>
+      <div class="likert-options">${[1,2,3,4,5,6,7].map(n=>`<label class="likert-option"><input type="radio" name="lk_${q.id}" value="${n}" ${sv===n?'checked':''} ${oc}><div class="likert-btn">${n}</div></label>`).join('')}</div>
+      <div class="likert-labels" style="margin-top:2px"><span>1</span><span>7</span></div>
+    </div>
+    ${q.sa?`<div class="short-answer-wrap" id="sawrap_${q.id}" style="display:${saVis||isT2?'block':'none'}">
+      <div class="sa-label">✏️ ${q.sa}</div>
+      <textarea id="sa_${q.id}" class="sa-input" placeholder="Your response…">${sa}</textarea>
+    </div>`:''}
+  </div>`;
+}
+function onRate(rvId,sawId){
+  const r=document.getElementById(rvId); if(r)r.style.display='block';
+  if(sawId){const s=document.getElementById(sawId);if(s)s.style.display='block';}
+}
+
+// ═══════════════════════════════════
+// REVIEW SCREEN
+// ═══════════════════════════════════
+function showReview(){
+  saveDim(); prog(90); showScreen('screenReview');
+  let hasAny=false;
+  let h=`<div class="review-wrap">
+    <div class="review-hero">
+      <div class="review-eyebrow">Almost there</div>
+      <h2>Review &amp; Reflect</h2>
+      <p>Below are the short answers you wrote as you worked through the assessment. <strong>Your instructor may read these as part of your completion credit</strong> — so take a moment to read back through what you wrote.</p>
+      <p style="margin-top:9px;color:var(--ink-light)">Does anything surprise you? Do any patterns stand out across your responses?</p>
+    </div>`;
+
+  DIM.forEach(d=>{
+    const items=[];
+    d.subdims.forEach(s=>s.questions.forEach(q=>{
+      if(!q.sa)return;
+      const ans=(R[d.id][s.id][q.id+'_sa']||'').trim();
+      if(ans){items.push({sub:s.name,p:q.sa,a:ans});hasAny=true;}
+    }));
+    if(!items.length)return;
+    h+=`<div class="review-dim-block">
+      <div class="review-dim-title">${d.icon} ${d.name}</div>
+      ${items.map(i=>`<div class="review-answer-item">
+        <div class="review-subdim-label">${i.sub}</div>
+        <div class="review-prompt">${i.p}</div>
+        <div class="review-answer">"${i.a}"</div>
+      </div>`).join('')}
+    </div>`;
+  });
+
+  if(!hasAny) h+=`<div class="review-empty">⚠️ You didn't write any short answers — consider going back and adding some. They'll deepen your reflection and strengthen your final exam response.</div>`;
+
+  h+=`<div class="second-look-card">
+    <div class="sl-eyebrow">Second Look</div>
+    <div class="sl-title">Having now answered questions across all four dimensions of Cultural Intelligence — is there anything you'd revise or add to what you wrote? What patterns do you notice in your own responses?</div>
+    <textarea id="slInput" class="sa-input" style="min-height:130px" placeholder="Your reflection here…">${secondLook||''}</textarea>
+    <p class="sl-note">Your instructor may also read this response.</p>
+  </div>
+  <div class="nav-row">
+    <button class="btn-back" onclick="backFromReview()">← Back</button>
+    <span class="section-progress">Review</span>
+    <button class="btn-next" onclick="finishReview()">See My Results →</button>
+  </div></div>`;
+  document.getElementById('reviewContent').innerHTML=h;
+}
+function backFromReview(){ const s=document.getElementById('slInput');if(s)secondLook=s.value; dimIdx=DIM.length-1; showScreen('screenAssessment'); renderDim(dimIdx); }
+function finishReview(){ const s=document.getElementById('slInput');if(s)secondLook=s.value; showResults(); }
+
+// ═══════════════════════════════════
+// T1 IMPORT
+// ═══════════════════════════════════
+function importT1Scores(){
+  try{
+    const p=JSON.parse(atob(document.getElementById('t1ImportText').value.trim()));
+    t1Scores=p.scores;
+    document.getElementById('importStatus').textContent='✓ T1 scores imported! They will appear in your results for comparison.';
+  }catch(e){document.getElementById('importStatus').textContent='⚠ Could not parse — make sure you copied the full export code from your T1 results.';}
+}
+
+// ═══════════════════════════════════
+// SCORES  (reversed: 8 - raw)
+// ═══════════════════════════════════
+function calcScores(){
+  const S={};
+  DIM.forEach(d=>{
+    const ss={};
+    d.subdims.forEach(s=>{
+      const vals=s.questions.map(q=>{const r=R[d.id][s.id][q.id]||0;return r>0?(q.rev?8-r:r):0;}).filter(v=>v>0);
+      ss[s.id]=vals.length?+(vals.reduce((a,b)=>a+b,0)/vals.length).toFixed(2):0;
+    });
+    S[d.id+'_s']=ss;
+    const dv=Object.values(ss).filter(v=>v>0);
+    S[d.id]=dv.length?+(dv.reduce((a,b)=>a+b,0)/dv.length).toFixed(2):0;
+  });
+  return S;
+}
+
+// ═══════════════════════════════════
+// RADAR
+// ═══════════════════════════════════
+function drawRadar(canvas,S,T1){
+  const ctx=canvas.getContext('2d'),W=canvas.width,H=canvas.height,cx=W/2,cy=H/2,Rad=Math.min(W,H)*0.35;
+  const keys=['drive','knowledge','strategy','action'];
+  const lbls=[['CQ','Drive'],['CQ','Knowledge'],['CQ','Strategy'],['CQ','Action']];
+  const dc=['#1A3A5C','#C08A00','#2A6B8A','#2E5F96'];
+  const angs=keys.map((_,i)=>i*Math.PI/2-Math.PI/2);
+  ctx.clearRect(0,0,W,H);
+  for(let l=1;l<=7;l++){
+    ctx.beginPath();
+    angs.forEach((a,i)=>{const r=(l/7)*Rad,x=cx+r*Math.cos(a),y=cy+r*Math.sin(a);i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);});
+    ctx.closePath(); ctx.strokeStyle=l===7?'#C0CCD8':'#DCE6EE'; ctx.lineWidth=l===7?1.5:1; ctx.stroke();
+    ctx.fillStyle='#A8B8C8'; ctx.font='10px DM Sans,sans-serif'; ctx.textAlign='center';
+    ctx.fillText(l,cx+4,cy-(l/7)*Rad+3);
+  }
+  angs.forEach((a,i)=>{
+    ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(cx+Rad*Math.cos(a),cy+Rad*Math.sin(a));ctx.strokeStyle='#CCD8E4';ctx.lineWidth=1;ctx.stroke();
+    const lx=cx+(Rad+40)*Math.cos(a),ly=cy+(Rad+40)*Math.sin(a);
+    ctx.fillStyle=dc[i];ctx.font='bold 10px DM Sans,sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';
+    lbls[i].forEach((p,li)=>ctx.fillText(p,lx,ly+(li-(lbls[i].length-1)/2)*13));
+  });
+  if(T1){
+    ctx.beginPath();
+    angs.forEach((a,i)=>{const v=parseFloat(T1[keys[i]])||0,r=(v/7)*Rad;i===0?ctx.moveTo(cx+r*Math.cos(a),cy+r*Math.sin(a)):ctx.lineTo(cx+r*Math.cos(a),cy+r*Math.sin(a));});
+    ctx.closePath();ctx.fillStyle='rgba(246,171,15,.08)';ctx.fill();ctx.strokeStyle='rgba(192,138,0,.5)';ctx.lineWidth=1.5;ctx.setLineDash([5,4]);ctx.stroke();ctx.setLineDash([]);
+  }
+  ctx.beginPath();
+  angs.forEach((a,i)=>{const v=parseFloat(S[keys[i]])||0,r=(v/7)*Rad;i===0?ctx.moveTo(cx+r*Math.cos(a),cy+r*Math.sin(a)):ctx.lineTo(cx+r*Math.cos(a),cy+r*Math.sin(a));});
+  ctx.closePath();ctx.fillStyle='rgba(26,58,92,.12)';ctx.fill();ctx.strokeStyle='#1A3A5C';ctx.lineWidth=2.5;ctx.stroke();
+  angs.forEach((a,i)=>{const v=parseFloat(S[keys[i]])||0,r=(v/7)*Rad,x=cx+r*Math.cos(a),y=cy+r*Math.sin(a);
+    ctx.beginPath();ctx.arc(x,y,5,0,2*Math.PI);ctx.fillStyle=dc[i];ctx.fill();ctx.strokeStyle='#fff';ctx.lineWidth=2;ctx.stroke();});
+}
+
+// ═══════════════════════════════════
+// RESULTS
+// ═══════════════════════════════════
+function showResults(){
+  const S=calcScores(), isT2=mode==='t2', T1=t1Scores;
+  prog(100); showScreen('screenResults');
+
+  let h=`<div class="results-hero">
+    <div class="eyebrow">${isT2?'T2 · Post-Assessment Results':'T1 · Pre-Assessment Results'}</div>
+    <h2>${name}'s Cultural Intelligence Profile</h2>
+    <p>${isT2?'Here is your post-course Cultural Intelligence profile. Use these results to guide your written final reflection.':'Here is your baseline Cultural Intelligence profile. Save this — you\'ll compare it to your post-course scores at the end of the program.'}</p>
+  </div>
+
+  <div class="radar-card">
+    <h3>Cultural Intelligence Radar Profile${T1&&isT2?' — T1 vs. T2':''}</h3>
+    <canvas id="radarCanvas" width="440" height="440"></canvas>
+    ${T1&&isT2?'<p style="text-align:center;font-size:.72rem;color:var(--ink-light);margin-top:9px"><span style="display:inline-block;width:20px;height:3px;background:#1A3A5C;vertical-align:middle;margin-right:5px;border-radius:2px"></span>T2 (now)&nbsp;&nbsp;<span style="display:inline-block;width:20px;border-top:1.5px dashed rgba(192,138,0,.65);vertical-align:middle;margin-right:5px"></span>T1 (before)</p>':''}
+  </div>
+
+  <div class="score-grid">`;
+
+  DIM.forEach(d=>{
+    const ov=S[d.id],bw=((ov/7)*100).toFixed(1);
+    h+=`<div class="score-card ${d.id}">
+      <div class="sc-label">${d.icon} ${isT2?'T2 · ':'T1 · '}${d.name}</div>
+      <div class="sc-name">${d.name.replace('CQ ','')}</div>
+      <div class="sc-overall">${ov>0?ov:'—'}<span> / 7</span></div>
+      <div class="sc-bar-bg"><div class="sc-bar-fill" style="width:${bw}%"></div></div>
+      <div class="sc-subs">${d.subdims.map(s=>`<div class="sc-sub-row"><span class="sc-sub-name">${s.name}</span><span class="sc-sub-val">${S[d.id+'_s'][s.id]>0?S[d.id+'_s'][s.id]:'—'}</span></div>`).join('')}</div>
+    </div>`;
+  });
+  h+='</div>';
+
+  if(isT2&&T1){
+    h+=`<div class="comparison-card"><h3>📈 T1 → T2 Comparison</h3>`;
+    DIM.forEach(d=>{
+      const t2v=S[d.id],t1v=parseFloat(T1[d.id])||0,delta=t2v-t1v;
+      const dc=delta>0.1?'up':delta<-0.1?'down':'same',dt=delta>0.1?`+${delta.toFixed(1)}`:delta<-0.1?delta.toFixed(1):'~';
+      h+=`<div class="comp-row">
+        <div class="comp-dim">${d.icon} ${d.name.replace('CQ ','')}</div>
+        <div class="comp-bars">
+          <div class="comp-bar-row"><span class="comp-tag">T1</span><div class="comp-bg"><div class="comp-fill bg-${d.id}" style="width:${((t1v/7)*100).toFixed(1)}%;opacity:.4"></div></div><span class="comp-val">${t1v.toFixed(1)}</span></div>
+          <div class="comp-bar-row"><span class="comp-tag">T2</span><div class="comp-bg"><div class="comp-fill bg-${d.id}" style="width:${((t2v/7)*100).toFixed(1)}%"></div></div><span class="comp-val">${t2v.toFixed(1)}</span></div>
+        </div>
+        <div class="comp-delta ${dc}">${dt}</div>
+      </div>`;
+    });
+    h+='</div>';
+  }
+
+  // Short answers
+  const saItems=[];
+  DIM.forEach(d=>d.subdims.forEach(s=>s.questions.forEach(q=>{
+    if(!q.sa)return;
+    const ans=(R[d.id][s.id][q.id+'_sa']||'').trim();
+    if(ans)saItems.push({dim:d.name,sub:s.name,p:q.sa,a:ans});
+  })));
+  if(saItems.length){
+    h+=`<div class="short-answers-card"><h3>✏️ Your Short Answers</h3>${saItems.map(i=>`<div class="sa-result-item">
+      <div class="sa-result-dim">${i.dim}</div><div class="sa-result-subdim">${i.sub}</div>
+      <div class="sa-result-prompt">${i.p}</div><div class="sa-result-answer">"${i.a}"</div>
+    </div>`).join('')}</div>`;
+  }
+
+  if(secondLook&&secondLook.trim()){
+    h+=`<div class="second-look-result"><div class="sl-eyebrow">Your Second Look Reflection</div><div class="sl-answer">"${secondLook.trim()}"</div></div>`;
+  }
+
+  h+=`<div class="reflections-card"><h3>💭 Your Reflections</h3>`;
+  DIM.forEach(d=>{
+    const rf=R[d.id].refl; if(!rf||!rf.trim())return;
+    h+=`<div class="reflection-item"><div class="ri-dim">${d.name}</div><div class="ri-q">${isT2?d.refl.t2:d.refl.t1}</div><div class="ri-a">"${rf}"</div></div>`;
+  });
+  const ita=R['drive'].italy;
+  if(!isT2&&ita&&ita.trim())h+=`<div class="reflection-item"><div class="ri-dim">🇮🇹 Italian Culture Engagement</div><div class="ri-q">Your pre-departure Italian culture activity plan</div><div class="ri-a">"${ita}"</div></div>`;
+  h+='</div>';
+
+  if(!isT2){
+    h+=`<div class="dev-guide-card"><div class="dev-guide-header"><div class="dev-guide-eyebrow">Before You Arrive in Italy</div><h3>Ways to Develop Each Dimension</h3><p>Now that you have your baseline Cultural Intelligence profile, here are concrete activities for each dimension — things you can do before departure to start building your cross-cultural capability.</p></div>`;
+    DIM.forEach(d=>{
+      h+=`<div class="dev-dim-block"><div class="dev-dim-title">${d.icon} ${d.name}</div><div class="dev-subdims">${d.subdims.map(s=>`<div class="dev-subdim-row"><div class="dev-subdim-name">${s.name}</div><div class="dev-subdim-activity">${s.example}</div></div>`).join('')}</div></div>`;
+    });
+    h+='</div>';
+  }
+
+  const exp=buildExport(S,isT2);
+  h+=`<div class="submit-card">
+    <div class="submit-card-header">
+      <h3>Submit Your Assessment</h3>
+      <p>Two steps below — complete both to receive full credit.</p>
+    </div>
+
+    <div class="submit-step">
+      <div class="submit-step-label">Step 1 of 2</div>
+      <div class="submit-step-title">📋 Copy your responses → paste into the Google Form</div>
+      <div class="submit-step-desc">This is your full written submission — scores, short answers, reflections. Copy it and paste into the course Google Form to record your completion.</div>
+      <div class="export-box" id="exportBox">${exp.text}</div>
+      <button class="btn-copy" onclick="copyText()">Copy Responses</button>
+      <div class="copied-toast" id="copiedText">✓ Copied — now paste into the Google Form.</div>
+    </div>
+
+    <div class="submit-step">
+      <div class="submit-step-label">Step 2 of 2${isT2?'':' — Important for T2'}</div>
+      <div class="submit-step-title">🔑 Copy your export code → submit as Canvas assignment</div>
+      <div class="submit-step-desc">${isT2
+        ? 'Submit this code as your T2 Canvas assignment to complete the record.'
+        : 'This short code contains your T1 scores. <strong style="color:rgba(255,255,255,.85)">Submit it as your Canvas assignment and keep it somewhere safe</strong> — you\'ll paste it into the T2 assessment at the end of the course to see how you\'ve grown. You can always retrieve it from your Canvas submission.'
+      }</div>
+      <div class="code-box-hint">💡 Click anywhere inside the box below to select all, then copy</div>
+      <div class="code-box" id="codeBox" onclick="selectCode()">${exp.code}</div>
+      <button class="btn-copy ghost" onclick="copyCode()">Copy Export Code</button>
+      <div class="copied-toast" id="copiedCode">✓ Copied — now paste into Canvas.</div>
+    </div>
+
+    <div class="submit-footer">
+      <button class="btn-restart" onclick="switchMode('${isT2?'t1':'t2'}')">Start ${isT2?'T1':'T2'} Assessment</button>
+    </div>
+  </div>`;
+
+  document.getElementById('resultsContent').innerHTML=h;
+  setTimeout(()=>{const c=document.getElementById('radarCanvas');if(c)drawRadar(c,S,isT2?T1:null);},120);
+}
+
+// ═══════════════════════════════════
+// EXPORT
+// ═══════════════════════════════════
+function buildExport(S,isT2){
+  const date=new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
+  let t=`══════════════════════════════════\nCultural Intelligence Assessment — ${isT2?'T2 Post':'T1 Pre'}-Assessment\nStudent: ${name}\nDate: ${date}\n══════════════════════════════════\n\nSCORES (scale: 1–7)\n─────────────────────────\n`;
+  DIM.forEach(d=>{t+=`${d.name}: ${S[d.id]}\n`;d.subdims.forEach(s=>t+=`  · ${s.name}: ${S[d.id+'_s'][s.id]>0?S[d.id+'_s'][s.id]:'—'}\n`);});
+  t+=`\nSHORT ANSWERS\n─────────────────────────\n`;
+  DIM.forEach(d=>d.subdims.forEach(s=>s.questions.forEach(q=>{
+    if(!q.sa)return; const ans=(R[d.id][s.id][q.id+'_sa']||'').trim();
+    if(ans)t+=`\n[${d.name} — ${s.name}]\n${q.sa}\n→ ${ans}\n`;
+  })));
+  if(secondLook&&secondLook.trim())t+=`\nSECOND LOOK REFLECTION\n─────────────────────────\n${secondLook.trim()}\n`;
+  t+=`\nREFLECTIONS\n─────────────────────────\n`;
+  DIM.forEach(d=>{const rf=R[d.id].refl;if(rf&&rf.trim())t+=`\n[${d.name}]\n${isT2?d.refl.t2:d.refl.t1}\n→ ${rf}\n`;});
+  const ita=R['drive'].italy;if(!isT2&&ita&&ita.trim())t+=`\n[🇮🇹 Italian Culture Activity]\n→ ${ita}\n`;
+  t+=`\n══════════════════════════════════\n`;
+  const co={name,date,scores:{}};DIM.forEach(d=>co.scores[d.id]=S[d.id]);
+  return{text:t,code:btoa(JSON.stringify(co))};
+}
+function copyText(){
+  navigator.clipboard.writeText(document.getElementById('exportBox').textContent).then(()=>{
+    const t=document.getElementById('copiedText');t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3500);
+  });
+}
+function copyCode(){
+  navigator.clipboard.writeText(document.getElementById('codeBox').textContent.trim()).then(()=>{
+    const t=document.getElementById('copiedCode');t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3500);
+  });
+}
+function selectCode(){
+  const el=document.getElementById('codeBox');
+  if(window.getSelection&&el){
+    const sel=window.getSelection(),range=document.createRange();
+    range.selectNodeContents(el);sel.removeAllRanges();sel.addRange(range);
+  }
+}
+
+// init
+selectMode('t1');
+</script>
+</body>
+</html>

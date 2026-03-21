@@ -240,7 +240,7 @@
   .sc-label{font-size:.64rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:3px;}
   .score-card.drive .sc-label{color:var(--navy);} .score-card.knowledge .sc-label{color:var(--gold-dark);} .score-card.strategy .sc-label{color:var(--teal);} .score-card.action .sc-label{color:var(--navy-mid);}
   .sc-name{font-family:'Playfair Display',serif;font-size:1.08rem;margin-bottom:12px;}
-  .sc-overall{font-size:2.3rem;font-weight:300;line-height:1;margin-bottom:3px;}
+  .sc-overall{font-size:2.3rem;font-weight:300;line-height:1;margin-bottom:3px;color:var(--ink);}
   .sc-overall span{font-size:.92rem;color:var(--ink-light);font-weight:400;}
   .sc-bar-bg{height:5px;background:var(--border);border-radius:3px;overflow:hidden;margin:9px 0 13px;}
   .sc-bar-fill{height:5px;border-radius:3px;transition:width 1s ease;}
@@ -311,7 +311,18 @@
   .dev-subdim-name{font-weight:600;color:var(--navy);font-size:.79rem;}
   .dev-subdim-activity{color:var(--ink-light);line-height:1.6;}
 
-  /* Journal handoff card */
+  /* Print / PDF styles */
+  @media print {
+    .site-header,.nav-row,.submit-card,.btn-download-pdf,.journal-handoff-card .jh-prompts{ display:none!important; }
+    body{ background:#fff; }
+    .screen{ display:block!important; }
+    #screenIntro,#screenAssessment,#screenValues,#screenReview,#screenOnboard{ display:none!important; }
+    #screenResults{ display:block!important; }
+    .results-wrap{ padding:20px; }
+    .score-card,.radar-card,.values-profile-card,.dev-guide-card,.comparison-card,.short-answers-card,.second-look-result,.reflections-card{ break-inside:avoid; }
+  }
+  .btn-download-pdf{ display:inline-flex;align-items:center;gap:7px;padding:10px 22px;background:#fff;color:var(--navy);border:2px solid var(--navy);border-radius:10px;font-family:'DM Sans',sans-serif;font-size:.88rem;font-weight:600;cursor:pointer;transition:all .2s;margin-bottom:24px; }
+  .btn-download-pdf:hover{ background:var(--navy);color:#fff; }
   .journal-handoff-card{background:#fff;border-radius:17px;border:2px solid var(--navy);padding:30px;margin-bottom:26px;box-shadow:0 4px 20px var(--shadow);}
   .jh-eyebrow{font-size:.68rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--navy);margin-bottom:8px;}
   .journal-handoff-card h3{font-family:'Playfair Display',serif;font-size:1.25rem;margin-bottom:10px;}
@@ -387,15 +398,6 @@
     <h1>How ready are you to<br><em>cross cultures?</em></h1>
     <p class="hero-desc">This assessment measures your <strong>Cultural Intelligence (CQ)</strong> — your capability to function effectively across cultural contexts. There are four dimensions: <strong>Drive</strong> (motivation), <strong>Knowledge</strong> (understanding), <strong>Strategy</strong> (planning), and <strong>Action</strong> (adaptability).</p>
 
-    <div class="expect-box">
-      <div class="expect-box-title">What to expect</div>
-      <div class="expect-item"><span class="expect-icon">⏱</span><span>Approximately <strong>20–25 minutes</strong> to complete</span></div>
-      <div class="expect-item"><span class="expect-icon">✏️</span><span>Several <strong>short-answer prompts</strong> asking you to describe specific experiences from your own life — your instructor will see these as part of your completion credit. <em>These prompts are designed for genuine reflection — not something to rush through.</em></span></div>
-      <div class="expect-item"><span class="expect-icon">🌍</span><span>A <strong>Cultural Values section</strong> that reveals where you personally fall on 10 cultural value dimensions — and how that compares to Italian culture</span></div>
-      <div class="expect-item"><span class="expect-icon">📊</span><span>A <strong>personalized results profile</strong> you'll reference throughout the course and return to at the end of the program</span></div>
-      <div class="expect-item"><span class="expect-icon">💬</span><span>Answer honestly — there are no right or wrong answers</span></div>
-    </div>
-
     <div class="mode-cards">
       <div class="mode-card t1 selected" id="t1Card" onclick="selectMode('t1')">
         <div class="mc-check">✓</div>
@@ -429,6 +431,11 @@
       <button class="btn-start" id="startBtn" onclick="startAssessment()">Begin Assessment →</button>
     </div>
   </div>
+</div>
+
+<!-- ONBOARDING -->
+<div class="screen" id="screenOnboard">
+  <div id="onboardContent"></div>
 </div>
 
 <!-- ASSESSMENT -->
@@ -783,6 +790,8 @@ function selectMode(m){
   document.getElementById('t1Card').classList.toggle('selected',m==='t1');
   document.getElementById('t2Card').classList.toggle('selected',m==='t2');
   document.getElementById('t2ImportSection').style.display=m==='t2'?'block':'none';
+  document.getElementById('headerT1Btn').classList.toggle('active',m==='t1');
+  document.getElementById('headerT2Btn').classList.toggle('active',m==='t2');
 }
 function switchMode(m){
   selectMode(m);
@@ -806,6 +815,48 @@ function startAssessment(){
       s.t2questions.forEach(q=>{ R[d.id][s.id][q.id]=0; });
     });
   });
+  showOnboard();
+}
+
+function showOnboard(){
+  showScreen('screenOnboard');
+  prog(0);
+  const isT2=mode==='t2';
+  let h=`<div class="hero" style="max-width:720px">
+    <div class="hero-eyebrow">${isT2?'T2 · Post-Assessment':'T1 · Pre-Assessment'} — ${name}</div>
+    <h2 style="font-family:'Playfair Display',serif;font-size:clamp(1.6rem,4vw,2.4rem);margin-bottom:20px;">${isT2?'Before you begin the post-assessment':'Before you begin'}</h2>`;
+
+  if(!isT2){
+    h+=`<div class="expect-box" style="max-width:100%">
+      <div class="expect-box-title">What to expect — Pre-Assessment (T1)</div>
+      <div class="expect-item"><span class="expect-icon">⏱</span><span>Approximately <strong>20–25 minutes</strong> to complete</span></div>
+      <div class="expect-item"><span class="expect-icon">✏️</span><span>Several <strong>short-answer prompts</strong> asking you to describe specific experiences from your own life — your instructor will see these as part of your completion credit. These are designed for genuine reflection, not something to rush through.</span></div>
+      <div class="expect-item"><span class="expect-icon">🌍</span><span>A <strong>Cultural Values section</strong> that reveals where you personally fall on 10 cultural value dimensions — and how that compares to Italian culture</span></div>
+      <div class="expect-item"><span class="expect-icon">📊</span><span>A <strong>downloadable results profile</strong> you'll reference throughout the course and return to at the end of the program</span></div>
+      <div class="expect-item"><span class="expect-icon">📓</span><span>Your results page will prompt you to <strong>take your CQ profile to your physical journal</strong> — have it ready</span></div>
+      <div class="expect-item"><span class="expect-icon">💬</span><span>Answer honestly — there are no right or wrong answers</span></div>
+    </div>`;
+  } else {
+    h+=`<div class="expect-box" style="max-width:100%">
+      <div class="expect-box-title">What to expect — Post-Assessment (T2)</div>
+      <div class="expect-item"><span class="expect-icon">⏱</span><span>Approximately <strong>15–20 minutes</strong> to complete</span></div>
+      <div class="expect-item"><span class="expect-icon">🇮🇹</span><span>Every question reflects on your <strong>actual experience in Italy</strong> — answer based on what happened, not what you wish had happened</span></div>
+      <div class="expect-item"><span class="expect-icon">📈</span><span>If you have your <strong>T1 export code</strong> from ICON, paste it on the previous screen to see your T1 → T2 comparison in your results</span></div>
+      <div class="expect-item"><span class="expect-icon">📝</span><span>Your results will anchor your <strong>written final exam</strong> — you'll complete the written portion immediately after this assessment</span></div>
+      <div class="expect-item"><span class="expect-icon">💬</span><span>Answer honestly — there are no right or wrong answers</span></div>
+    </div>`;
+  }
+
+  h+=`<div class="nav-row" style="margin-top:28px;padding-top:20px;border-top:1.5px solid var(--border);">
+    <button class="btn-back" onclick="showScreen('screenIntro');prog(0);">← Back</button>
+    <span></span>
+    <button class="btn-next ${isT2?'t2-mode':''}" onclick="beginAssessment()">Begin →</button>
+  </div></div>`;
+
+  document.getElementById('onboardContent').innerHTML=h;
+}
+
+function beginAssessment(){
   showScreen('screenAssessment'); renderDim(0);
 }
 
@@ -819,31 +870,33 @@ function nextDim(){
   if(!validateDim()) return;
   saveDim();
   if(dimIdx<DIM.length-1){dimIdx++;renderDim(dimIdx);}
-  else{ if(mode==='t1'){showValuesScreen();}else{showReview();} }
+  else{ if(mode==='t1'){showValuesScreen();}else{showResults();} }
 }
 
 function validateDim(){
-  if(mode==='t2') return true; // T2 has no short answers to validate
+  if(mode==='t2') return true;
   let missingSA=[];
   const d=DIM[dimIdx];
   d.subdims.forEach(s=>{
     s.questions.forEach(q=>{
       if(!q.sa) return;
+      const naChecked=document.getElementById('na_'+q.id)?.checked;
+      if(naChecked) return; // N/A selected — no SA needed
+      const ratedEl=document.querySelector(`input[name="lk_${q.id}"]:checked`);
+      if(!ratedEl) return; // not rated — no SA required
+      const ratedVal=+ratedEl.value;
+      const minScore=q.saMinScore||1;
+      if(ratedVal<minScore) return; // below threshold — SA box hidden, not required
       const saEl=document.getElementById('sa_'+q.id);
-      if(saEl&&saEl.style.display!=='none'&&!saEl.value.trim()){
-        // only warn if they rated the question
-        const rated=document.querySelector(`input[name="lk_${q.id}"]:checked`);
-        const naChecked=document.getElementById('na_'+q.id)?.checked;
-        if(rated&&!naChecked) missingSA.push(q.id);
-      }
+      if(saEl&&!saEl.value.trim()) missingSA.push(q.id);
     });
   });
   const warn=document.getElementById('pageWarn');
   if(missingSA.length>0){
-    if(warn){warn.classList.add('show');}
+    if(warn) warn.classList.add('show');
     missingSA.forEach(id=>{
       const el=document.getElementById('sa_'+id);
-      if(el){el.classList.add('warn'); el.scrollIntoView({behavior:'smooth',block:'center'});}
+      if(el){ el.classList.add('warn'); el.scrollIntoView({behavior:'smooth',block:'center'}); }
     });
     return false;
   }
@@ -900,14 +953,6 @@ function renderDim(idx){
     }
   });
 
-  // Reflection prompt — T2 only
-  if(isT2){
-    h+=`<div class="reflection-wrap" style="margin-top:10px">
-      <div class="reflection-label">Reflection Prompt <span class="optional">(required — informs your final exam)</span></div>
-      <textarea id="refl_${d.id}" placeholder="${d.refl.t2}">${R[d.id].refl||''}</textarea>
-    </div>`;
-  }
-
   const totalStepsLabel = mode==='t1' ? `${idx+1}/${TOTAL_STEPS}` : `${idx+1}/${DIM.length}`;
   const nextLabel = idx<DIM.length-1 ? 'Next →' : (mode==='t1' ? 'Cultural Values →' : 'Review & Reflect →');
 
@@ -924,7 +969,7 @@ function renderDim(idx){
 function qHtmlT2(q,did,sid){
   const sv=R[did][sid][q.id]||0;
   return `<div class="battery-item">
-    <div class="battery-q-text">${q.text}${q.rev?' <span class="reversed-badge">R</span>':''}</div>
+    <div class="battery-q-text">${q.text}</div>
     <div class="likert-wrap">
       <div class="likert-anchor-row"><span>Strongly Disagree</span><span>Strongly Agree</span></div>
       <div class="likert-options">${[1,2,3,4,5,6,7].map(n=>`<label class="likert-option t2-mode"><input type="radio" name="lk_${q.id}" value="${n}" ${sv===n?'checked':''}><div class="likert-btn">${n}</div></label>`).join('')}</div>
@@ -1228,6 +1273,10 @@ function showResults(){
     <div class="eyebrow">${isT2?'T2 · Post-Assessment Results':'T1 · Pre-Assessment Results'}</div>
     <h2>${name}'s Cultural Intelligence Profile</h2>
     <p>${isT2?'Here is your post-course Cultural Intelligence profile. Use these results to guide your written final reflection.':'Here is your baseline Cultural Intelligence profile. Save this — you\'ll compare it to your post-course scores at the end of the program.'}</p>
+    <div style="margin-top:16px;">
+      <button class="btn-download-pdf" onclick="window.print()">⬇ Save as PDF</button>
+      <p style="font-size:.75rem;color:var(--ink-light);margin-top:7px;max-width:420px;line-height:1.55;">A print dialog will open. Set the <strong>Destination</strong> to <strong>"Save as PDF"</strong> (not a printer) and click Save. This gives you a copy of your results to reference throughout the course.</p>
+    </div>
   </div>
 
   <div class="radar-card">
@@ -1294,6 +1343,17 @@ function showResults(){
       h+=`<div class="reflection-item"><div class="ri-dim">${d.name}</div><div class="ri-q">${d.refl.t2}</div><div class="ri-a">"${rf}"</div></div>`;
     });
     h+='</div>';
+    h+=`<div class="journal-handoff-card" style="border-color:var(--teal);">
+      <div class="jh-eyebrow" style="color:var(--teal);">📝 Now Turn to Your Written Final</div>
+      <h3>Take Your Results to the Final Exam</h3>
+      <p style="font-size:.88rem;color:var(--ink-light);line-height:1.72;margin-bottom:20px;">Your CQ profile is in front of you — now use it. Your written final exam will ask you to reflect on how your Cultural Intelligence has grown during this program. Use your T1 → T2 comparison and the profiles on this page as your anchor.</p>
+      <div class="jh-prompts">
+        ${DIM.map(d=>`<div class="jh-prompt-item">
+          <div class="jh-dim" style="color:var(--teal)">${d.icon} ${d.name}</div>
+          <div class="jh-q">${d.refl.t2}</div>
+        </div>`).join('')}
+      </div>
+    </div>`;
   } else {
     h+=`<div class="journal-handoff-card">
       <div class="jh-eyebrow">📓 Now Open Your Journal</div>
@@ -1358,25 +1418,22 @@ function showResults(){
   h+=`<div class="submit-card">
     <div class="submit-card-header">
       <h3>Submit Your Assessment</h3>
-      <p>Two steps — complete both to receive full credit.</p>
+      <p>${isT2?'One step to complete your submission.':'Two steps — complete both to receive full credit.'}</p>
     </div>
     <div class="submit-step">
-      <div class="submit-step-label">Step 1 of 2</div>
-      <div class="submit-step-title">📋 Copy your responses → paste into ICON</div>
-      <div class="submit-step-desc">This is your full written submission — scores, short answers, and reflections. Copy it and paste it as a text submission into the ICON assignment for this assessment.</div>
-      <div class="export-box" id="exportBox">${exp.text}</div>
-      <button class="btn-copy" onclick="copyText()">Copy Responses</button>
-      <div class="copied-toast" id="copiedText">✓ Copied — now paste into ICON.</div>
+      <div class="submit-step-label">${isT2?'Submit':'Step 1 of 2'}</div>
+      <div class="submit-step-title">📄 Save your results as a PDF → upload to ICON</div>
+      <div class="submit-step-desc">Use the <strong style="color:rgba(255,255,255,.85)">"Save as PDF"</strong> button at the top of your results page. Once saved, upload the PDF as your submission in the ICON assignment for this assessment. This is your record of completion and your reference document for the ${isT2?'written final':'course'}.</div>
     </div>
-    <div class="submit-step">
-      <div class="submit-step-label">Step 2 of 2${isT2?'':' — Important for T2'}</div>
+    ${!isT2?`<div class="submit-step">
+      <div class="submit-step-label">Step 2 of 2 — Important for T2</div>
       <div class="submit-step-title">🔑 Copy your export code → submit to ICON</div>
-      <div class="submit-step-desc">${isT2?'Submit this code as your T2 ICON assignment to complete the record.':'This short code contains your T1 scores. <strong style="color:rgba(255,255,255,.85)">Submit it as your ICON assignment and keep it somewhere safe</strong> — you\'ll paste it into the T2 assessment at the end of the course to see how you\'ve grown. You can always retrieve it from your ICON submission.'}</div>
+      <div class="submit-step-desc">This short code contains your T1 scores. <strong style="color:rgba(255,255,255,.85)">Submit it as a separate ICON assignment and keep it somewhere safe</strong> — you'll paste it into the T2 assessment at the end of the course to see how you've grown. You can always retrieve it from your ICON submission.</div>
       <div class="code-box-hint">💡 Click anywhere inside the box to select all, then copy</div>
       <div class="code-box" id="codeBox" onclick="selectCode()">${exp.code}</div>
       <button class="btn-copy ghost" onclick="copyCode()">Copy Export Code</button>
       <div class="copied-toast" id="copiedCode">✓ Copied — now paste into ICON.</div>
-    </div>
+    </div>`:''}
   </div>`;
 
   // Italy activity (T1 only, after submit — inform only, no textarea)
@@ -1384,8 +1441,8 @@ function showResults(){
     h+=`<div class="italy-activity-card" style="margin-top:24px;">
       <div class="ia-eyebrow">Your Next Step</div>
       <h3>🇮🇹 Italian Culture Engagement Activity</h3>
-      <p>Before you arrive in Italy, I'd like you to engage with Italian culture in some way and share what you discover. It's helpful to connect with an existing interest — perhaps food, art, language, fashion, music, sports, history, design, film, or something else entirely. Think about what you'd like to explore, then describe what you plan to do (or have already done) to engage with Italian culture as preparation for your cultural immersion.</p>
-      <p style="margin-top:10px;">You'll document this with a <strong>photo + caption</strong> and upload it to the <a href="#" style="color:var(--gold);">shared Google Slides deck</a> by <strong>Monday, May 4th</strong> — photo on the slide, caption in the notes section. We'll review these together on the first day of class.</p>
+      <p>Before you arrive in Italy, I'd like you to engage with Italian culture in some way and share what you discover. It's helpful to connect with an existing interest — perhaps food, art, language, fashion, music, sports, history, design, film, or something else entirely.</p>
+      <p style="margin-top:10px;">You'll document this with a <strong>photo + caption</strong> and upload it to the <a href="https://docs.google.com/presentation/d/1v3gNvy9lEeJHlspXdJuV5-CTYETcEqDMoMQVzRONV1o/edit?usp=sharing" target="_blank" style="color:var(--gold);">shared Google Slides deck</a> by <strong>Monday, May 4th</strong> — photo on the slide, caption in the notes section. We'll review these together on the first day of class.</p>
     </div>`;
   }
 

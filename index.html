@@ -311,6 +311,18 @@
   .dev-subdim-name{font-weight:600;color:var(--navy);font-size:.79rem;}
   .dev-subdim-activity{color:var(--ink-light);line-height:1.6;}
 
+  /* Journal handoff card */
+  .journal-handoff-card{background:#fff;border-radius:17px;border:2px solid var(--navy);padding:30px;margin-bottom:26px;box-shadow:0 4px 20px var(--shadow);}
+  .jh-eyebrow{font-size:.68rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--navy);margin-bottom:8px;}
+  .journal-handoff-card h3{font-family:'Playfair Display',serif;font-size:1.25rem;margin-bottom:10px;}
+  .journal-handoff-card > p{font-size:.88rem;color:var(--ink-light);line-height:1.72;margin-bottom:22px;}
+  .jh-prompts{display:flex;flex-direction:column;gap:0;}
+  .jh-prompt-item{padding:16px 0;border-bottom:1px dashed var(--border);}
+  .jh-prompt-item:last-child{border-bottom:none;padding-bottom:0;}
+  .jh-dim{font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--navy);margin-bottom:5px;}
+  .jh-bridge .jh-dim{color:var(--gold-dark);}
+  .jh-q{font-size:.92rem;color:var(--ink);line-height:1.68;font-style:italic;}
+
   /* Italy activity (results page) */
   .italy-activity-card{background:var(--ink);color:var(--cream);border-radius:17px;padding:32px;margin-bottom:26px;position:relative;overflow:hidden;}
   .italy-activity-card::before{content:'🇮🇹';position:absolute;right:28px;top:24px;font-size:3rem;opacity:.12;}
@@ -378,8 +390,8 @@
     <div class="expect-box">
       <div class="expect-box-title">What to expect</div>
       <div class="expect-item"><span class="expect-icon">⏱</span><span>Approximately <strong>20–25 minutes</strong> to complete</span></div>
-      <div class="expect-item"><span class="expect-icon">✏️</span><span>Several <strong>short-answer prompts</strong> asking you to describe specific experiences — your instructor may read these as part of your completion credit</span></div>
-      <div class="expect-item"><span class="expect-icon">🌍</span><span>A <strong>Cultural Values section</strong> that reveals where you personally fall on 10 global value dimensions — and how that compares to Italian culture</span></div>
+      <div class="expect-item"><span class="expect-icon">✏️</span><span>Several <strong>short-answer prompts</strong> asking you to describe specific experiences from your own life — your instructor will see these as part of your completion credit. <em>These prompts are designed for genuine reflection — not something to rush through.</em></span></div>
+      <div class="expect-item"><span class="expect-icon">🌍</span><span>A <strong>Cultural Values section</strong> that reveals where you personally fall on 10 cultural value dimensions — and how that compares to Italian culture</span></div>
       <div class="expect-item"><span class="expect-icon">📊</span><span>A <strong>personalized results profile</strong> you'll reference throughout the course and return to at the end of the program</span></div>
       <div class="expect-item"><span class="expect-icon">💬</span><span>Answer honestly — there are no right or wrong answers</span></div>
     </div>
@@ -395,7 +407,7 @@
         <div class="mc-check">✓</div>
         <div class="mc-label">After the Course</div>
         <div class="mc-title">T2 · Post-Assessment</div>
-        <div class="mc-desc">Complete this during the final week of class. Reflects on your Cultural Intelligence growth and informs your written final exam.</div>
+        <div class="mc-desc">Complete this during the final week of class. Each question reflects on your actual experience in Italy. Your results will anchor your written final exam reflection.</div>
       </div>
     </div>
 
@@ -449,23 +461,44 @@ const DIM = [
       { id:'intrinsic', name:'Intrinsic Interest', desc:'The genuine enjoyment and curiosity you feel when engaging with people from different cultural backgrounds.',
         example:'Participate in an activity with someone from a different culture — attend a cultural festival, try a new cuisine with a local, or explore an art form or tradition that isn\'t your own.',
         questions:[
-          {id:'q_intr1', text:'When I find out a classmate or neighbor grew up in a very different cultural context than me, my first instinct is curiosity rather than indifference.', rev:false, sa:null, naOk:false, anchorL:'Not like me at all', anchorR:'Very much like me'},
-          {id:'q_intr2', text:'I seek out music, food, films, or events from other cultures on my own — not because it\'s assigned or expected, but because I actually want to.', rev:false, sa:'Give a recent example — what did you seek out, and what drew you to it?', naOk:false, anchorL:'Not like me at all', anchorR:'Very much like me'},
-          {id:'q_intr3', text:'I tend to feel more comfortable spending time with people who share my cultural background than with people from very different ones.', rev:true, sa:null, naOk:false, anchorL:'Strongly disagree', anchorR:'Strongly agree'}
+          {id:'q_intr1', text:'When I find out a classmate or neighbor grew up in a very different cultural context than me, my first instinct is curiosity rather than indifference.', rev:false, sa:null, naOk:false},
+          {id:'q_intr2', text:'I seek out music, food, films, or events from other cultures on my own — not because it\'s assigned or expected, but because I actually want to.', rev:false, sa:'Give a recent example — what did you seek out, and what drew you to it?', saMinScore:4, naOk:false},
+          {id:'q_intr3', text:'I tend to feel more comfortable spending time with people who share my cultural background than with people from very different ones.', rev:true, sa:null, naOk:false}
+        ],
+        t2questions:[
+          {id:'t2_intr1', text:'During my time in Italy, I found myself genuinely curious about why Italians do things differently — not just noticing the differences, but wanting to understand them.', rev:false},
+          {id:'t2_intr2', text:'I sought out interactions with Italians or other international students beyond what the program required, because I actually wanted to.', rev:false},
+          {id:'t2_intr3', text:'Looking back, I was mostly an observer of Italian culture during this program — I noticed differences but didn\'t feel much pull to dig deeper or understand them more fully.', rev:true},
+          {id:'t2_intr4', text:'There were specific moments in Italy where I felt genuinely lit up by a cultural experience — a conversation, a place, a tradition — in a way that surprised me.', rev:false},
+          {id:'t2_intr5', text:'Most of the cultural experiences I had in Italy felt more like obligations to check off than things I was drawn to for their own sake.', rev:true}
         ]},
       { id:'extrinsic', name:'Extrinsic Interest', desc:'Your awareness of the practical benefits — professional, academic, and personal — that come from multicultural experience.',
         example:'After your next cross-cultural encounter, write down 2–3 specific things you learned or gained — and think about how they might be useful to you going forward.',
         questions:[
-          {id:'q_extr1', text:'I can point to specific ways that cross-cultural experience has already paid off for me — in friendships, opportunities, or how I think about problems.', rev:false, sa:'Describe one specific example — what was the experience and what did you gain from it?', naOk:false, anchorL:'Not at all true for me', anchorR:'Very true for me'},
-          {id:'q_extr2', text:'Honestly, I don\'t think navigating cultural differences will matter much in the career path I\'m planning.', rev:true, sa:null, naOk:false, anchorL:'Strongly disagree', anchorR:'Strongly agree'},
-          {id:'q_extr3', text:'When I have the option between an experience that\'s familiar and one that stretches my cultural comfort zone, I tend to choose the stretch.', rev:false, sa:null, naOk:false, anchorL:'Not like me at all', anchorR:'Very much like me'}
+          {id:'q_extr1', text:'I can point to specific ways that cross-cultural experience has already paid off for me — in friendships, opportunities, or how I think about problems.', rev:false, sa:'Describe one specific example — what was the experience and what did you gain from it?', saMinScore:4, naOk:false},
+          {id:'q_extr2', text:'Honestly, I don\'t think navigating cultural differences will matter much in the career path I\'m planning.', rev:true, sa:null, naOk:false},
+          {id:'q_extr3', text:'When I have the option between an experience that\'s familiar and one that stretches my cultural comfort zone, I tend to choose the stretch.', rev:false, sa:null, naOk:false}
+        ],
+        t2questions:[
+          {id:'t2_extr1', text:'I can now articulate specific ways that my time in Italy has made me more valuable — professionally, intellectually, or interpersonally.', rev:false},
+          {id:'t2_extr2', text:'I leave this program with a clearer sense of why cross-cultural fluency matters for the kind of career I want to build.', rev:false},
+          {id:'t2_extr3', text:'When I think honestly about what I gained from being in Italy, most of it feels personal rather than professionally relevant.', rev:true},
+          {id:'t2_extr4', text:'I noticed moments during the course where cultural awareness gave me an edge — in understanding a case, reading a situation, or connecting with someone.', rev:false},
+          {id:'t2_extr5', text:'The cross-cultural experiences I had here have changed how I think about at least one aspect of my professional goals or plans.', rev:false}
         ]},
       { id:'efficacy', name:'Self-Efficacy', desc:'Your confidence in your ability to navigate and be effective in unfamiliar cultural situations.',
         example:'Have a meal or coffee with someone from a different background — notice where you feel comfortable and where you feel stretched. Reflect on it afterward.',
         questions:[
-          {id:'q_effi1', text:'When I\'m in a social situation where I\'m clearly the cultural outsider, I trust myself to figure things out without shutting down.', rev:false, sa:'Briefly describe a time you were the cultural outsider. What did you do?', naOk:true, anchorL:'Not like me at all', anchorR:'Very much like me'},
-          {id:'q_effi2', text:'The thought of accidentally offending someone from a different cultural background genuinely makes me want to avoid those situations.', rev:true, sa:null, naOk:false, anchorL:'Strongly disagree', anchorR:'Strongly agree'},
-          {id:'q_effi3', text:'If I made an awkward cultural mistake in front of others, I think I could recover and move forward without it derailing the interaction.', rev:false, sa:null, naOk:false, anchorL:'Not at all confident', anchorR:'Very confident'}
+          {id:'q_effi1', text:'When I\'m in a social situation where I\'m clearly the cultural outsider, I trust myself to figure things out without shutting down.', rev:false, sa:'Briefly describe a time you were the cultural outsider. What did you do?', saMinScore:4, naOk:true},
+          {id:'q_effi2', text:'The thought of accidentally offending someone from a different cultural background genuinely makes me want to avoid those situations.', rev:true, sa:null, naOk:false},
+          {id:'q_effi3', text:'If I made an awkward cultural mistake in front of others, I think I could recover and move forward without it derailing the interaction.', rev:false, sa:null, naOk:false}
+        ],
+        t2questions:[
+          {id:'t2_effi1', text:'I leave Italy more confident in my ability to navigate unfamiliar cultural situations than when I arrived.', rev:false},
+          {id:'t2_effi2', text:'When things went wrong culturally — a miscommunication, an awkward moment, a misread situation — I was generally able to recover without it derailing me.', rev:false},
+          {id:'t2_effi3', text:'There were enough moments in Italy where I felt truly out of my depth that I\'m less confident about cross-cultural situations than when I arrived.', rev:true},
+          {id:'t2_effi4', text:'I now believe I could function effectively in a professional context in another country — not perfectly, but well enough to get things done and build relationships.', rev:false},
+          {id:'t2_effi5', text:'Italy tested my cultural comfort zone in ways I didn\'t expect, and I rose to most of those moments better than I anticipated.', rev:false}
         ]}
     ],
     refl:{t1:'What draws you to the cross-cultural experience of studying abroad in Italy? What are you most curious or nervous about?',
@@ -476,30 +509,58 @@ const DIM = [
       { id:'business', name:'Business Systems', desc:'Your familiarity with how economic, legal, and organizational systems differ across cultures.',
         example:'Read a local news site from another country for a week — notice what economic or political assumptions feel different from your own.',
         questions:[
-          {id:'q_busi1', text:'I have a general sense of how business practices or professional expectations in other countries might differ from what I\'ve grown up around.', rev:false, sa:null, naOk:false, anchorL:'Very little sense', anchorR:'A solid sense'},
-          {id:'q_busi2', text:'If someone asked me to explain how economic or legal systems vary across cultures, I\'d have very little to say.', rev:true, sa:null, naOk:false, anchorL:'Strongly disagree', anchorR:'Strongly agree'},
-          {id:'q_busi3', text:'I have enough background knowledge that if I were doing a semester project involving a company in another country, I\'d know what cultural-economic questions to start asking.', rev:false, sa:null, naOk:false, anchorL:'Not at all', anchorR:'Yes, definitely'}
+          {id:'q_busi1', text:'I have a general sense of how business practices or professional expectations in other countries might differ from what I\'ve grown up around.', rev:false, sa:null, naOk:false},
+          {id:'q_busi2', text:'If someone asked me to explain how economic or legal systems vary across cultures, I\'d have very little to say.', rev:true, sa:null, naOk:false},
+          {id:'q_busi3', text:'I have enough background knowledge that if I were doing a semester project involving a company in another country, I\'d know what cultural-economic questions to start asking.', rev:false, sa:'What kinds of questions do you think you\'d start asking? What do you already know, and where do you sense gaps?', saMinScore:4, naOk:false}
+        ],
+        t2questions:[
+          {id:'t2_busi1', text:'I now have a more concrete understanding of how business practices and professional expectations in Italy — and Europe more broadly — differ from what I grew up with.', rev:false},
+          {id:'t2_busi2', text:'Through cases, site visits, and direct observation, I developed a clearer sense of how cultural context shapes economic behavior and organizational life.', rev:false},
+          {id:'t2_busi3', text:'Despite four weeks in Italy, I still feel like my understanding of how economic, legal, and institutional differences shape business across cultures is pretty surface-level.', rev:true},
+          {id:'t2_busi4', text:'I can now point to at least two specific ways that Italian or European business culture differs from American norms — and explain why those differences matter.', rev:false},
+          {id:'t2_busi5', text:'My time here has made me more aware of the questions I\'d need to ask before working in or with a business in another cultural context.', rev:false}
         ]},
       { id:'valuesnorms', name:'Values & Norms', desc:'Your knowledge of the deeply-held values, social expectations, and religious beliefs that shape behavior in different cultures.',
         example:'Read The Culture Map by Erin Meyer — or explore one chapter — and map where your own culture sits on at least two of the dimensions she describes.',
         questions:[
-          {id:'q_valn1', text:'I can describe at least one concrete way that cultures differ in how they balance individual goals against group harmony.', rev:false, sa:'Describe the example you have in mind — what cultures, and what did you observe or learn?', naOk:false, anchorL:'I couldn\'t describe one', anchorR:'Yes, clearly'},
-          {id:'q_valn2', text:'I\'ve encountered situations — in real life, through travel, or through media — where someone\'s behavior only made sense once I understood their cultural values.', rev:false, sa:'Briefly describe the situation — what happened, and what cultural insight helped it make sense?', naOk:true, anchorL:'This hasn\'t happened for me', anchorR:'Yes, this resonates strongly'},
-          {id:'q_valn3', text:'Most of the time, I find that people\'s core social values are pretty much the same regardless of where they\'re from.', rev:true, sa:null, naOk:false, anchorL:'Strongly disagree', anchorR:'Strongly agree'}
+          {id:'q_valn1', text:'I can describe at least one concrete way that cultures differ in how they balance individual goals against group harmony.', rev:false, sa:'Describe the example you have in mind — what cultures, and what did you observe or learn?', saMinScore:4, naOk:false},
+          {id:'q_valn2', text:'I\'ve encountered situations — in real life, through travel, or through media — where someone\'s behavior only made sense once I understood their cultural values.', rev:false, sa:'Briefly describe the situation — what happened, and what cultural insight helped it make sense?', saMinScore:4, naOk:true},
+          {id:'q_valn3', text:'Most of the time, I find that people\'s core social values are pretty much the same regardless of where they\'re from.', rev:true, sa:null, naOk:false}
+        ],
+        t2questions:[
+          {id:'t2_valn1', text:'Italy gave me concrete examples of cultural values I had only read about — I can now connect concepts like high uncertainty avoidance or polychronic time to things I actually observed or experienced.', rev:false},
+          {id:'t2_valn2', text:'I leave with a more nuanced understanding of how deeply values shape everyday behavior — in ways that are invisible to people inside a culture but visible to someone coming from outside.', rev:false},
+          {id:'t2_valn3', text:'Most of the cultural differences I noticed in Italy felt superficial — food, style, pace — rather than reflecting deeper differences in values.', rev:true},
+          {id:'t2_valn4', text:'There were moments in Italy where I caught myself judging something as strange or inefficient before realizing it reflected a different value system than my own.', rev:false},
+          {id:'t2_valn5', text:'I now understand, in a more embodied way, what it means for a culture to be more collectivist, higher-context, or more expressive than the one I grew up in.', rev:false}
         ]},
       { id:'socioling', name:'Socio-Linguistics', desc:'Your knowledge of how language, communication styles, and contextual cues vary across cultures.',
         example:'Learn 10–15 basic Italian words or phrases — greetings, courtesies, common expressions. Notice how the structure or feel of the language differs from English.',
         questions:[
-          {id:'q_soci1', text:'I understand that some cultures communicate very directly while others rely heavily on context, silence, and what\'s left unsaid.', rev:false, sa:'What\'s an example you have in mind? Where does it come from — personal experience, something you\'ve studied, or something you\'ve observed?', naOk:false, anchorL:'I hadn\'t really thought about this', anchorR:'Yes, I understand this well'},
-          {id:'q_soci2', text:'I find it difficult to notice or name differences in how people from different backgrounds communicate — their style, tone, or what they leave unsaid.', rev:true, sa:null, naOk:false, anchorL:'Strongly disagree', anchorR:'Strongly agree'},
-          {id:'q_soci3', text:'I\'m aware that a gesture, phrase, or expression that\'s perfectly normal in one culture can be confusing or offensive in another.', rev:false, sa:'Give a specific example — what gesture or expression, and between which cultural contexts?', naOk:false, anchorL:'Not very aware', anchorR:'Very aware'}
+          {id:'q_soci1', text:'I understand that some cultures communicate very directly while others rely heavily on context, silence, and what\'s left unsaid.', rev:false, sa:'What\'s an example you have in mind? Where does it come from — personal experience, something you\'ve studied, or something you\'ve observed?', saMinScore:4, naOk:false},
+          {id:'q_soci2', text:'I find it difficult to notice or name differences in how people from different backgrounds communicate — their style, tone, or what they leave unsaid.', rev:true, sa:null, naOk:false},
+          {id:'q_soci3', text:'I\'m aware that a gesture, phrase, or expression that\'s perfectly normal in one culture can be confusing or offensive in another.', rev:false, sa:'Give a specific example — what gesture or expression, and between which cultural contexts?', saMinScore:4, naOk:false}
+        ],
+        t2questions:[
+          {id:'t2_soci1', text:'I leave Italy with a much clearer sense of what high-context, expressive, and indirect communication actually looks and feels like — from the inside.', rev:false},
+          {id:'t2_soci2', text:'I noticed specific moments where Italian communication norms — in gesture, interruption, silence, or tone — meant something different than I initially read.', rev:false},
+          {id:'t2_soci3', text:'I leave Italy with roughly the same understanding of how communication styles and language norms vary across cultures as when I arrived — the experience didn\'t significantly deepen it.', rev:true},
+          {id:'t2_soci4', text:'My Italian experience changed how I think about my own default communication style and the assumptions it carries.', rev:false},
+          {id:'t2_soci5', text:'I can now give a concrete example of a moment where misreading a communication cue led to confusion, awkwardness, or a missed connection.', rev:false}
         ]},
       { id:'leadership', name:'Leadership Across Cultures', desc:'Your understanding of how management, hierarchy, and relationship-building norms vary across cultural contexts.',
         example:'Talk to an international student or someone who has lived abroad — ask what surprised them most about how teams or groups functioned differently than they expected.',
         questions:[
-          {id:'q_lead1', text:'I\'ve noticed — in classes, group projects, or team settings — that people have genuinely different assumptions about who should lead and how decisions should get made.', rev:false, sa:'Briefly describe what you noticed — what was the situation and what differed?', naOk:true, anchorL:'Haven\'t noticed this', anchorR:'Yes, I\'ve noticed this clearly'},
-          {id:'q_lead2', text:'In my experience, a good leader is a good leader regardless of cultural context — the fundamentals are basically universal.', rev:true, sa:null, naOk:false, anchorL:'Strongly disagree', anchorR:'Strongly agree'},
-          {id:'q_lead3', text:'I\'m aware that expectations around hierarchy, taking initiative, and decision-making vary significantly depending on cultural context.', rev:false, sa:null, naOk:false, anchorL:'Not aware of this', anchorR:'Very aware'}
+          {id:'q_lead1', text:'I\'ve noticed — in classes, group projects, or team settings — that people have genuinely different assumptions about who should lead and how decisions should get made.', rev:false, sa:'Briefly describe what you noticed — what was the situation and what differed?', saMinScore:4, naOk:true},
+          {id:'q_lead2', text:'In my experience, a good leader is a good leader regardless of cultural context — the fundamentals are basically universal.', rev:true, sa:null, naOk:false},
+          {id:'q_lead3', text:'I\'m aware that expectations around hierarchy, taking initiative, and decision-making vary significantly depending on cultural context.', rev:false, sa:null, naOk:false}
+        ],
+        t2questions:[
+          {id:'t2_lead1', text:'Through coursework and direct experience, I developed a more concrete understanding of how hierarchy, initiative, and decision-making function differently in Italian or European professional contexts.', rev:false},
+          {id:'t2_lead2', text:'I noticed during group work or interactions in Italy that people had genuinely different assumptions about who should lead and how — and I can describe what I observed.', rev:false},
+          {id:'t2_lead3', text:'My understanding of cross-cultural leadership differences feels mostly theoretical — I didn\'t see many concrete examples of it playing out during the program.', rev:true},
+          {id:'t2_lead4', text:'Italy challenged at least one assumption I had about what good leadership or effective teamwork looks like.', rev:false},
+          {id:'t2_lead5', text:'I leave with a clearer sense of how my own default leadership and group-work style might land differently in other cultural contexts.', rev:false}
         ]}
     ],
     refl:{t1:'What do you already know about Italian culture? Where do you sense your knowledge gaps are largest?',
@@ -510,23 +571,44 @@ const DIM = [
       { id:'planning', name:'Planning', desc:'Your tendency to prepare intentionally before entering cross-cultural encounters — researching, anticipating, and strategizing.',
         example:'Before arriving in Italy, write a short list of 3 things you expect might feel culturally unfamiliar — then revisit that list once you arrive and see how you did.',
         questions:[
-          {id:'q_plan1', text:'Before going somewhere new or spending significant time with people from an unfamiliar cultural background, I tend to do some informal research — even just a quick look at what to expect.', rev:false, sa:'Think of a recent example — where were you going or who were you meeting, and what did you do to prepare?', naOk:true, anchorL:'I don\'t usually do this', anchorR:'Yes, I regularly do this'},
-          {id:'q_plan2', text:'When I know a situation might be culturally unfamiliar, I find myself thinking through potential awkward moments before they happen.', rev:false, sa:null, naOk:false, anchorL:'Not like me at all', anchorR:'Very much like me'},
-          {id:'q_plan3', text:'I usually just figure cultural situations out as I go — I don\'t really think about them in advance.', rev:true, sa:null, naOk:false, anchorL:'Strongly disagree', anchorR:'Strongly agree'}
+          {id:'q_plan1', text:'Before going somewhere new or spending significant time with people from an unfamiliar cultural background, I tend to do some informal research — even just a quick look at what to expect.', rev:false, sa:'Think of a recent example — where were you going or who were you meeting, and what did you do to prepare?', saMinScore:4, naOk:true},
+          {id:'q_plan2', text:'When I know a situation might be culturally unfamiliar, I find myself thinking through potential awkward moments before they happen.', rev:false, sa:null, naOk:false},
+          {id:'q_plan3', text:'I usually just figure cultural situations out as I go — I don\'t really think about them in advance.', rev:true, sa:null, naOk:false}
+        ],
+        t2questions:[
+          {id:'t2_plan1', text:'As the program progressed, I got better at anticipating cultural friction points before they happened — and planning around them.', rev:false},
+          {id:'t2_plan2', text:'I developed personal strategies during the program for navigating situations where I wasn\'t sure what the cultural expectations were.', rev:false},
+          {id:'t2_plan3', text:'I mostly reacted to cultural situations as they came rather than thinking ahead about them — planning didn\'t feel necessary or useful.', rev:true},
+          {id:'t2_plan4', text:'By the final week, I was approaching unfamiliar cultural situations with more intentionality than I was in week one.', rev:false},
+          {id:'t2_plan5', text:'I can describe a specific strategy I developed or refined during the program for navigating cross-cultural uncertainty.', rev:false}
         ]},
       { id:'awareness', name:'Awareness', desc:'Your ability to stay present and notice both your own reactions and others\' perspectives during cross-cultural encounters.',
         example:'After your next cross-cultural interaction, pause and ask yourself: What did I notice? What surprised me? What assumptions did I bring in?',
         questions:[
-          {id:'q_awar1', text:'During interactions with people from different cultural backgrounds, I notice shifts in body language, hesitation, or word choice that suggest a cultural difference might be at play.', rev:false, sa:null, naOk:true, anchorL:'I rarely notice this', anchorR:'I notice this often'},
-          {id:'q_awar2', text:'I catch myself thinking about how I\'m coming across in cross-cultural interactions — not just how the other person seems to me.', rev:false, sa:null, naOk:true, anchorL:'Not like me at all', anchorR:'Very much like me'},
-          {id:'q_awar3', text:'When I\'m focused on getting something done, I don\'t really have bandwidth to think about the cultural dynamics of the interaction at the same time.', rev:true, sa:null, naOk:false, anchorL:'Strongly disagree', anchorR:'Strongly agree'}
+          {id:'q_awar1', text:'During interactions with people from different cultural backgrounds, I notice shifts in body language, hesitation, or word choice that suggest a cultural difference might be at play.', rev:false, sa:null, naOk:true},
+          {id:'q_awar2', text:'I catch myself thinking about how I\'m coming across in cross-cultural interactions — not just how the other person seems to me.', rev:false, sa:null, naOk:true},
+          {id:'q_awar3', text:'When I\'m focused on getting something done, I don\'t really have bandwidth to think about the cultural dynamics of the interaction at the same time.', rev:true, sa:null, naOk:false}
+        ],
+        t2questions:[
+          {id:'t2_awar1', text:'Over the course of the program, I became more attuned to noticing cultural dynamics as they were happening — not just in retrospect.', rev:false},
+          {id:'t2_awar2', text:'I got better at catching myself making cultural assumptions in real time, rather than only realizing it after the fact.', rev:false},
+          {id:'t2_awar3', text:'I found it difficult to stay attuned to cultural dynamics while also focusing on what I was actually trying to do or say — I couldn\'t hold both at once.', rev:true},
+          {id:'t2_awar4', text:'By the end of the program, I was more aware of how my own cultural background was shaping my perceptions and reactions in the moment.', rev:false},
+          {id:'t2_awar5', text:'There were specific interactions in Italy where I noticed something culturally significant happening and adjusted my behavior accordingly — in the moment, not after.', rev:false}
         ]},
       { id:'checking', name:'Checking', desc:'Your ability to notice when your cultural assumptions are wrong and update your mental model accordingly.',
         example:'After a cross-cultural encounter that felt "off," pause and ask: What assumption did I bring in that might have been wrong? Write it down.',
         questions:[
-          {id:'q_chec1', text:'When a cross-cultural interaction goes unexpectedly, my first instinct is to ask what I might have misread rather than assuming the other person was being strange.', rev:false, sa:null, naOk:false, anchorL:'Not like me at all', anchorR:'Very much like me'},
-          {id:'q_chec2', text:'I can think of a specific time when my assumptions about a cultural group turned out to be wrong — and I updated them.', rev:false, sa:'Describe the situation — what did you assume going in, and what changed your mind?', naOk:true, anchorL:'Can\'t think of one', anchorR:'Yes, clearly'},
-          {id:'q_chec3', text:'Once I\'ve formed an impression of how a particular culture operates, it takes a lot to change my mind.', rev:true, sa:null, naOk:false, anchorL:'Strongly disagree', anchorR:'Strongly agree'}
+          {id:'q_chec1', text:'When a cross-cultural interaction goes unexpectedly, my first instinct is to ask what I might have misread rather than assuming the other person was being strange.', rev:false, sa:null, naOk:false},
+          {id:'q_chec2', text:'I can think of a specific time when my assumptions about a cultural group turned out to be wrong — and I updated them.', rev:false, sa:'Describe the situation — what did you assume going in, and what changed your mind?', saMinScore:4, naOk:true},
+          {id:'q_chec3', text:'Once I\'ve formed an impression of how a particular culture operates, it takes a lot to change my mind.', rev:true, sa:null, naOk:false}
+        ],
+        t2questions:[
+          {id:'t2_chec1', text:'I can point to at least one assumption I arrived with about Italy or Italian culture that turned out to be wrong — and I updated it.', rev:false},
+          {id:'t2_chec2', text:'When cultural interactions went unexpectedly in Italy, I got better at asking myself what I might have misread rather than blaming the situation or the other person.', rev:false},
+          {id:'t2_chec3', text:'My mental model of Italian culture at the end of the program is pretty similar to what it was when I arrived — I didn\'t have many moments that fundamentally challenged my assumptions.', rev:true},
+          {id:'t2_chec4', text:'The experience of having my cultural assumptions checked in Italy has made me more likely to hold my assumptions about unfamiliar cultures more lightly in the future.', rev:false},
+          {id:'t2_chec5', text:'I left Italy with a more complex, less tidy understanding of Italian culture than I arrived with — and I think that\'s a good thing.', rev:false}
         ]}
     ],
     refl:{t1:'How do you typically prepare for unfamiliar situations? How might you apply that to navigating Italian culture?',
@@ -537,23 +619,44 @@ const DIM = [
       { id:'speech', name:'Speech Acts', desc:'Your ability to adapt the manner and content of your communication — shifting between direct and indirect, formal and informal.',
         example:'Practice shifting between direct and indirect communication in a single day — notice when you naturally do this already, and try it deliberately in one new situation.',
         questions:[
-          {id:'q_spee1', text:'I adjust how direct or indirect I am depending on the relationship, stakes, and context of a conversation — it doesn\'t feel forced.', rev:false, sa:null, naOk:false, anchorL:'Not like me at all', anchorR:'Very much like me'},
-          {id:'q_spee2', text:'I tend to communicate pretty much the same way regardless of who I\'m talking to — it\'s just how I express myself.', rev:true, sa:null, naOk:false, anchorL:'Strongly disagree', anchorR:'Strongly agree'},
-          {id:'q_spee3', text:'When I need to deliver uncomfortable feedback or navigate a sensitive topic, I can adjust how I frame it depending on the person and situation.', rev:false, sa:'Think of a recent time you had to deliver something difficult or uncomfortable. How did you adjust your approach for that person or situation?', naOk:true, anchorL:'I struggle with this', anchorR:'I do this naturally'}
+          {id:'q_spee1', text:'I adjust how direct or indirect I am depending on the relationship, stakes, and context of a conversation — it doesn\'t feel forced.', rev:false, sa:null, naOk:false},
+          {id:'q_spee2', text:'I tend to communicate pretty much the same way regardless of who I\'m talking to — it\'s just how I express myself.', rev:true, sa:null, naOk:false},
+          {id:'q_spee3', text:'When I need to deliver uncomfortable feedback or navigate a sensitive topic, I can adjust how I frame it depending on the person and situation.', rev:false, sa:'Think of a recent time you had to deliver something difficult or uncomfortable. How did you adjust your approach for that person or situation?', saMinScore:4, naOk:true}
+        ],
+        t2questions:[
+          {id:'t2_spee1', text:'I adjusted how direct, formal, or indirect I was in conversations during Italy — not just with Italians but across different cultural contexts in the program.', rev:false},
+          {id:'t2_spee2', text:'I found myself framing things differently in Italy depending on who I was talking to — adapting the content and style of what I said, not just the words.', rev:false},
+          {id:'t2_spee3', text:'I communicated pretty much the same way throughout the program — I didn\'t feel much need or ability to shift how I expressed myself depending on cultural context.', rev:true},
+          {id:'t2_spee4', text:'There were specific moments in Italy where I consciously chose a more indirect or more direct approach than I would have defaulted to — and it worked better.', rev:false},
+          {id:'t2_spee5', text:'I leave Italy with a broader repertoire of communication approaches than I arrived with.', rev:false}
         ]},
       { id:'verbal', name:'Verbal Behaviors', desc:'Your ability to modify pace, tone, volume, and expressiveness of speech to match cultural norms.',
         example:'Record a short voice memo of yourself explaining something casually, then re-record it as if speaking to a professor, then to a child. Listen back and notice what changes.',
         questions:[
-          {id:'q_verb1', text:'I naturally shift my pace, volume, or level of formality depending on who I\'m with — a professor, a close friend, a stranger from another country.', rev:false, sa:null, naOk:false, anchorL:'Not like me at all', anchorR:'Very much like me'},
-          {id:'q_verb2', text:'When I\'m with someone who communicates very differently from me — much quieter, much more formal, much more expressive — I can adjust my style to meet them partway.', rev:false, sa:'Describe a specific person or situation where this came up — what was different about how they communicated, and what did you do?', naOk:true, anchorL:'I find this difficult', anchorR:'I do this naturally'},
-          {id:'q_verb3', text:'I\'ve been told — or noticed myself — that I communicate in pretty much the same way regardless of the audience.', rev:true, sa:null, naOk:false, anchorL:'Strongly disagree', anchorR:'Strongly agree'}
+          {id:'q_verb1', text:'I naturally shift my pace, volume, or level of formality depending on who I\'m with — a professor, a close friend, a stranger from another country.', rev:false, sa:null, naOk:false},
+          {id:'q_verb2', text:'When I\'m with someone who communicates very differently from me — much quieter, much more formal, much more expressive — I can adjust my style to meet them partway.', rev:false, sa:'Describe a specific person or situation where this came up — what was different about how they communicated, and what did you do?', saMinScore:4, naOk:true},
+          {id:'q_verb3', text:'I\'ve been told — or noticed myself — that I communicate in pretty much the same way regardless of the audience.', rev:true, sa:null, naOk:false}
+        ],
+        t2questions:[
+          {id:'t2_verb1', text:'I adapted my pace, volume, or expressiveness at some point during the program to better match the communicative norms of the people I was with.', rev:false},
+          {id:'t2_verb2', text:'Navigating Italian conversational norms — the expressiveness, the interruptions, the pace — stretched me in ways I didn\'t fully anticipate.', rev:false},
+          {id:'t2_verb3', text:'I found it difficult to genuinely change how I speak — my default verbal style felt fixed, even when I could see it wasn\'t quite matching the context.', rev:true},
+          {id:'t2_verb4', text:'I became more aware of how my verbal habits — my rate of speech, my volume, my expressiveness — read differently to people from other cultural backgrounds.', rev:false},
+          {id:'t2_verb5', text:'There was at least one interaction in Italy where adjusting my verbal style — slowing down, expressing more enthusiasm, being more understated — made a real difference.', rev:false}
         ]},
       { id:'nonverbal', name:'Nonverbal Behaviors', desc:'Your ability to adapt gestures, eye contact, personal space, and other nonverbal cues appropriately across cultural contexts.',
         example:'Choose one nonverbal behavior that might feel unfamiliar — a different level of eye contact, a greeting gesture, a different physical distance — and practice it deliberately in one low-stakes interaction.',
         questions:[
-          {id:'q_nonv1', text:'I\'m aware that my default habits around eye contact, personal space, and physical greetings might feel very different to someone from another cultural background.', rev:false, sa:null, naOk:false, anchorL:'Not aware of this', anchorR:'Very aware'},
-          {id:'q_nonv2', text:'I can dial my nonverbal behavior up or down — more or less expressive, more or less physical — when I sense the situation calls for it.', rev:false, sa:null, naOk:false, anchorL:'I struggle with this', anchorR:'I do this naturally'},
-          {id:'q_nonv3', text:'I don\'t really think about my body language or nonverbal habits — I just act naturally and assume others will adjust.', rev:true, sa:null, naOk:false, anchorL:'Strongly disagree', anchorR:'Strongly agree'}
+          {id:'q_nonv1', text:'I\'m aware that my default habits around eye contact, personal space, and physical greetings might feel very different to someone from another cultural background.', rev:false, sa:null, naOk:false},
+          {id:'q_nonv2', text:'I can dial my nonverbal behavior up or down — more or less expressive, more or less physical — when I sense the situation calls for it.', rev:false, sa:null, naOk:false},
+          {id:'q_nonv3', text:'I don\'t really think about my body language or nonverbal habits — I just act naturally and assume others will adjust.', rev:true, sa:null, naOk:false}
+        ],
+        t2questions:[
+          {id:'t2_nonv1', text:'I found myself adjusting nonverbal behaviors in Italy — how I greeted people, how close I stood, how much I gestured — in response to the cultural context.', rev:false},
+          {id:'t2_nonv2', text:'The physical expressiveness of Italian communication — gesture, touch, proximity — pushed me outside my nonverbal comfort zone at some point during the program.', rev:false},
+          {id:'t2_nonv3', text:'I didn\'t feel like I changed my nonverbal behavior much during the program — I mostly just stayed true to how I naturally carry myself.', rev:true},
+          {id:'t2_nonv4', text:'I now have a clearer sense of which of my nonverbal habits are culturally specific rather than universal — things I had assumed were just "normal."', rev:false},
+          {id:'t2_nonv5', text:'I leave Italy with more flexibility in how I physically show up in conversations — I\'m more willing to adapt gesture, eye contact, or physical presence to fit the context.', rev:false}
         ]}
     ],
     refl:{t1:'Think about a time you felt culturally "out of sync" in a conversation or social situation. What happened, and what did you do?',
@@ -700,6 +803,7 @@ function startAssessment(){
     d.subdims.forEach(s=>{
       R[d.id][s.id]={};
       s.questions.forEach(q=>{ R[d.id][s.id][q.id]=0; if(q.sa) R[d.id][s.id][q.id+'_sa']=''; });
+      s.t2questions.forEach(q=>{ R[d.id][s.id][q.id]=0; });
     });
   });
   showScreen('screenAssessment'); renderDim(0);
@@ -719,7 +823,7 @@ function nextDim(){
 }
 
 function validateDim(){
-  // soft warn if short-answer boxes are empty
+  if(mode==='t2') return true; // T2 has no short answers to validate
   let missingSA=[];
   const d=DIM[dimIdx];
   d.subdims.forEach(s=>{
@@ -748,15 +852,19 @@ function validateDim(){
 }
 
 function saveDim(){
-  const d=DIM[dimIdx];
-  d.subdims.forEach(s=>s.questions.forEach(q=>{
+  const d=DIM[dimIdx], isT2=mode==='t2';
+  const qs=isT2?d.subdims.flatMap(s=>s.t2questions.map(q=>({...q,sid:s.id}))):
+                d.subdims.flatMap(s=>s.questions.map(q=>({...q,sid:s.id})));
+  qs.forEach(q=>{
     const el=document.querySelector(`input[name="lk_${q.id}"]:checked`);
-    if(el) R[d.id][s.id][q.id]=+el.value;
-    const na=document.getElementById('na_'+q.id);
-    if(na&&na.checked) R[d.id][s.id][q.id]=-1; // -1 = N/A
-    if(q.sa){const sa=document.getElementById('sa_'+q.id);if(sa)R[d.id][s.id][q.id+'_sa']=sa.value;}
-  }));
-  const rf=document.getElementById('refl_'+d.id); if(rf)R[d.id].refl=rf.value;
+    if(el) R[d.id][q.sid][q.id]=+el.value;
+    if(!isT2){
+      const na=document.getElementById('na_'+q.id);
+      if(na&&na.checked) R[d.id][q.sid][q.id]=-1;
+      if(q.sa){const sa=document.getElementById('sa_'+q.id);if(sa)R[d.id][q.sid][q.id+'_sa']=sa.value;}
+    }
+  });
+  const rf=document.getElementById('refl_'+d.id); if(rf) R[d.id].refl=rf.value;
 }
 
 // ═══════════════════════════════════
@@ -782,12 +890,8 @@ function renderDim(idx){
     if(isT2){
       h+=`<div class="subdim-block">
         <div class="subdim-title">${s.name}</div>
-        <div class="subdim-desc">${s.desc}</div>
-        <div class="subdim-example retrospective">
-          <span class="retro-label">Before Italy, you were suggested:</span>${s.example}
-          <div class="retro-question">Did you do something like this — or experience something similar in Italy?</div>
-        </div>
-        <div class="battery-questions">${s.questions.map(q=>qHtml(q,d.id,s.id,true)).join('')}</div>
+        <div class="subdim-desc" style="margin-bottom:18px">${s.desc}</div>
+        <div class="battery-questions">${s.t2questions.map(q=>qHtmlT2(q,d.id,s.id)).join('')}</div>
       </div>`;
     } else {
       h+=`<div class="subdim-block">
@@ -796,33 +900,48 @@ function renderDim(idx){
     }
   });
 
-  const reflQ=isT2?d.refl.t2:d.refl.t1;
-  h+=`<div class="reflection-wrap" style="margin-top:10px">
-    <div class="reflection-label">Reflection Prompt <span class="optional">(required — informs your final exam)</span></div>
-    <textarea id="refl_${d.id}" placeholder="${reflQ}">${R[d.id].refl||''}</textarea>
-  </div>`;
+  // Reflection prompt — T2 only
+  if(isT2){
+    h+=`<div class="reflection-wrap" style="margin-top:10px">
+      <div class="reflection-label">Reflection Prompt <span class="optional">(required — informs your final exam)</span></div>
+      <textarea id="refl_${d.id}" placeholder="${d.refl.t2}">${R[d.id].refl||''}</textarea>
+    </div>`;
+  }
 
-  const totalStepsLabel = mode==='t1' ? `${idx+1} of ${TOTAL_STEPS}` : `${idx+1} of ${DIM.length}`;
+  const totalStepsLabel = mode==='t1' ? `${idx+1}/${TOTAL_STEPS}` : `${idx+1}/${DIM.length}`;
   const nextLabel = idx<DIM.length-1 ? 'Next →' : (mode==='t1' ? 'Cultural Values →' : 'Review & Reflect →');
 
   h+=`<div class="nav-row">
     <button class="btn-back" onclick="prevDim()">← ${idx===0?'Back to Start':'Previous'}</button>
-    <span class="section-progress">Step ${totalStepsLabel}</span>
+    <span class="section-progress">${totalStepsLabel}</span>
     <button class="btn-next" onclick="nextDim()">${nextLabel}</button>
   </div></div>`;
 
   document.getElementById('assessmentContent').innerHTML=h;
 }
 
+// T2 question renderer — clean likert only, no SA, no NA, reverse badge shown
+function qHtmlT2(q,did,sid){
+  const sv=R[did][sid][q.id]||0;
+  return `<div class="battery-item">
+    <div class="battery-q-text">${q.text}${q.rev?' <span class="reversed-badge">R</span>':''}</div>
+    <div class="likert-wrap">
+      <div class="likert-anchor-row"><span>Strongly Disagree</span><span>Strongly Agree</span></div>
+      <div class="likert-options">${[1,2,3,4,5,6,7].map(n=>`<label class="likert-option t2-mode"><input type="radio" name="lk_${q.id}" value="${n}" ${sv===n?'checked':''}><div class="likert-btn">${n}</div></label>`).join('')}</div>
+    </div>
+  </div>`;
+}
+
 function qHtml(q,did,sid,isT2){
   const sv=R[did][sid][q.id]||0, sa=(q.sa&&R[did][sid][q.id+'_sa'])||'';
   const isNA=sv===-1;
-  const saVisible=(sv>0||sa.length>0)&&!isNA;
-  const oc=isT2?'':`onchange="onRate('sawrap_${q.id}')"`;
+  const minScore=q.saMinScore||1;
+  const saVisible=((sv>=minScore)||sa.length>0)&&!isNA;
+  const oc=isT2?'':`onchange="onRate('${q.id}','sawrap_${q.id}')"`;
   return `<div class="battery-item">
     <div class="battery-q-text">${q.text}${q.rev&&isT2?' <span class="reversed-badge">R</span>':''}</div>
     <div class="likert-wrap">
-      <div class="likert-anchor-row"><span>${q.anchorL}</span><span>${q.anchorR}</span></div>
+      <div class="likert-anchor-row"><span>Strongly Disagree</span><span>Strongly Agree</span></div>
       <div class="likert-options">${[1,2,3,4,5,6,7].map(n=>`<label class="likert-option"><input type="radio" name="lk_${q.id}" value="${n}" ${sv===n?'checked':''} ${oc}><div class="likert-btn">${n}</div></label>`).join('')}</div>
     </div>
     ${q.naOk?`<div class="na-option"><label class="na-label"><input type="checkbox" id="na_${q.id}" ${isNA?'checked':''} onchange="toggleNA('${q.id}','sawrap_${q.id}')"> This hasn't come up for me yet</label></div>`:''}
@@ -834,8 +953,16 @@ function qHtml(q,did,sid,isT2){
   </div>`;
 }
 
-function onRate(sawrapId){
-  if(sawrapId){const s=document.getElementById(sawrapId);if(s)s.style.display='block';}
+function onRate(qId, sawrapId){
+  // find the question's saMinScore
+  let minScore=1;
+  DIM.forEach(d=>d.subdims.forEach(s=>s.questions.forEach(q=>{ if(q.id===qId&&q.saMinScore) minScore=q.saMinScore; })));
+  const selected=document.querySelector(`input[name="lk_${qId}"]:checked`);
+  const val=selected?+selected.value:0;
+  if(sawrapId){
+    const s=document.getElementById(sawrapId);
+    if(s) s.style.display=(val>=minScore)?'block':'none';
+  }
 }
 function toggleNA(qId, sawrapId){
   const cb=document.getElementById('na_'+qId);
@@ -892,9 +1019,9 @@ function renderValuesScreen(){
 
   let h=`<div class="values-wrap">
     <div class="values-hero">
-      <div class="values-eyebrow">Step ${DIM.length+1} of ${TOTAL_STEPS}</div>
+      <div class="values-eyebrow">${DIM.length+1}/${TOTAL_STEPS}</div>
       <h2>Your Cultural Value Orientations</h2>
-      <p>Beyond Cultural Intelligence, we each carry deep-seated value orientations shaped by our upbringing, culture, and experiences. This section will reveal where you personally tend to fall on 10 global value dimensions — and how your tendencies compare to major cultural clusters around the world, including <strong style="color:var(--gold-dark)">🇮🇹 Latin Europe (Italy)</strong>, your destination culture.</p>
+      <p>We each carry deep-seated value orientations shaped by our upbringing, culture, and experiences. This section will reveal where you personally tend to fall on 10 cultural value dimensions — and how your tendencies compare to major cultural clusters around the world, including <strong style="color:var(--gold-dark)">🇮🇹 Latin Europe (Italy)</strong>, your destination culture.</p>
       <p style="margin-top:10px;font-size:.88rem;color:var(--ink-light);">Answer the questions honestly — your responses will place your ▲ marker on each spectrum. There are no right or wrong answers.</p>
     </div>
     ${clusterExplainer}`;
@@ -903,10 +1030,8 @@ function renderValuesScreen(){
     const score=calcCVScore(d);
     const pct=scoreToPercent(score);
     h+=`<div class="values-dim-block">
-      <div class="cv-dim-label">${d.leftPole} ↔ ${d.rightPole}
-        ${d.clusters.some(c=>c.italy)?`<span class="italy-cluster-note">🇮🇹 Italy falls here</span>`:''}
-      </div>
-      <div class="cv-explainer-grid" style="margin-bottom:18px;">
+      <div class="cv-dim-label">${d.leftPole} ↔ ${d.rightPole}</div>
+      <div class="cv-explainer-grid" style="margin-bottom:20px;">
         <div class="cv-pole-block left"><div class="cv-pole-name">${d.leftPole}</div><div class="cv-pole-detail">${d.leftDesc}</div></div>
         <div class="cv-pole-block right"><div class="cv-pole-name">${d.rightPole}</div><div class="cv-pole-detail">${d.rightDesc}</div></div>
       </div>
@@ -917,15 +1042,18 @@ function renderValuesScreen(){
           return `<div class="battery-item">
             <div class="battery-q-text">${q.text}</div>
             <div class="likert-wrap">
-              <div class="likert-anchor-row"><span>${q.anchorL}</span><span>${q.anchorR}</span></div>
+              <div class="likert-anchor-row"><span>Strongly Disagree</span><span>Strongly Agree</span></div>
               <div class="likert-options">${[1,2,3,4,5,6,7].map(n=>`<label class="likert-option"><input type="radio" name="cvlk_${q.id}" value="${n}" ${sv===n?'checked':''} onchange="updateMarker('${d.id}')"><div class="likert-btn">${n}</div></label>`).join('')}</div>
             </div>
           </div>`;
         }).join('')}
       </div>
 
-      <div style="margin-top:20px;padding-top:16px;border-top:1.5px dashed var(--border);">
-        <div class="cv-clusters-label">How cultural clusters typically fall on this dimension</div>
+      <div style="margin-top:22px;padding-top:18px;border-top:1.5px dashed var(--border);">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+          <div class="cv-clusters-label" style="margin-bottom:0">How cultural clusters typically fall on this dimension</div>
+          ${d.clusters.some(c=>c.italy)?`<span class="italy-cluster-note">🇮🇹 Italy falls here</span>`:''}
+        </div>
         <div class="spectrum-clusters">
           ${[0,1,2].map(zone=>{
             const zc=d.clusters.filter(c=>c.zone===zone);
@@ -949,7 +1077,7 @@ function renderValuesScreen(){
 
   h+=`<div class="nav-row">
     <button class="btn-back" onclick="backFromValues()">← Back</button>
-    <span class="section-progress">Step ${DIM.length+1} of ${TOTAL_STEPS}</span>
+    <span class="section-progress">${DIM.length+1}/${TOTAL_STEPS}</span>
     <button class="btn-next" onclick="continueToReview()">Review & Reflect →</button>
   </div></div>`;
 
@@ -1010,7 +1138,7 @@ function showReview(){
   </div>
   <div class="nav-row">
     <button class="btn-back" onclick="backFromReview()">← Back</button>
-    <span class="section-progress">Step ${TOTAL_STEPS} of ${TOTAL_STEPS}</span>
+    <span class="section-progress">${TOTAL_STEPS}/${TOTAL_STEPS}</span>
     <button class="btn-next" onclick="finishReview()">See My Results →</button>
   </div></div>`;
 
@@ -1039,11 +1167,12 @@ function importT1Scores(){
 // SCORES
 // ═══════════════════════════════════
 function calcScores(){
-  const S={};
+  const S={}, isT2=mode==='t2';
   DIM.forEach(d=>{
     const ss={};
     d.subdims.forEach(s=>{
-      const vals=s.questions.map(q=>{ const r=R[d.id][s.id][q.id]||0; return(r>0)?(q.rev?8-r:r):0; }).filter(v=>v>0);
+      const qs=isT2?s.t2questions:s.questions;
+      const vals=qs.map(q=>{ const r=R[d.id][s.id][q.id]||0; return(r>0)?(q.rev?8-r:r):0; }).filter(v=>v>0);
       ss[s.id]=vals.length?+(vals.reduce((a,b)=>a+b,0)/vals.length).toFixed(2):0;
     });
     S[d.id+'_s']=ss;
@@ -1157,18 +1286,56 @@ function showResults(){
   }
 
   // Reflections
-  h+=`<div class="reflections-card"><h3>💭 Your Reflections</h3>`;
-  DIM.forEach(d=>{
-    const rf=R[d.id].refl; if(!rf||!rf.trim()) return;
-    h+=`<div class="reflection-item"><div class="ri-dim">${d.name}</div><div class="ri-q">${isT2?d.refl.t2:d.refl.t1}</div><div class="ri-a">"${rf}"</div></div>`;
-  });
-  h+='</div>';
+  // Reflections — T2 shows typed responses; T1 points to journal
+  if(isT2){
+    h+=`<div class="reflections-card"><h3>💭 Your Reflections</h3>`;
+    DIM.forEach(d=>{
+      const rf=R[d.id].refl; if(!rf||!rf.trim()) return;
+      h+=`<div class="reflection-item"><div class="ri-dim">${d.name}</div><div class="ri-q">${d.refl.t2}</div><div class="ri-a">"${rf}"</div></div>`;
+    });
+    h+='</div>';
+  } else {
+    h+=`<div class="journal-handoff-card">
+      <div class="jh-eyebrow">📓 Now Open Your Journal</div>
+      <h3>Take Your Results to Your Physical Journal</h3>
+      <p>The reflection work for this assessment happens on paper — not on screen. With your CQ profile in front of you, work through each of the four prompts below in your course journal. Take your time. These aren't questions to rush through; they're the beginning of a four-week conversation with yourself.</p>
+      <div class="jh-prompts">
+        ${DIM.map(d=>`<div class="jh-prompt-item">
+          <div class="jh-dim">${d.icon} ${d.name}</div>
+          <div class="jh-q">${d.id==='action'
+            ? 'How flexible are you, really? Think of a time you were asked — explicitly or implicitly — to behave differently than you naturally would. Did you adapt? Why or why not?'
+            : d.refl.t1}</div>
+        </div>`).join('')}
+        <div class="jh-prompt-item jh-bridge">
+          <div class="jh-dim">✦ Bringing It Together</div>
+          <div class="jh-q">Looking at your full Cultural Intelligence profile, what does it tell you about the kind of cross-cultural learner you currently are — and the kind you want to become by the end of the program?</div>
+        </div>
+      </div>
+    </div>`;
+  }
 
-  // Cultural values profile (T1 only)
+  // CQ + International Marketing connection note (T1 only)
+  if(!isT2){
+    h+=`<div style="background:#EDF1F7;border-left:4px solid var(--navy);border-radius:0 12px 12px 0;padding:18px 22px;margin-bottom:26px;">
+      <div style="font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--navy);margin-bottom:6px;">Why This Matters for International Marketing</div>
+      <p style="font-size:.87rem;color:var(--ink-light);line-height:1.72;">Cultural Intelligence isn't just a personal development exercise — it's a core professional skill for anyone working across markets. All consumer behavior is shaped by cultural norms, values, and context. How people make purchasing decisions, what they trust, what they aspire to, how they respond to messaging — these are not universal. The marketer who understands cultural dimensions like power distance, collectivism, or high-context communication doesn't just navigate the world better personally — they design better products, campaigns, and strategies. Your CQ profile is a starting point for understanding how your own cultural lens shapes what you take for granted, and how much work it takes to see the world through someone else's.</p>
+    </div>`;
+  }
+
+  // Dev guide (T1 only) — before Cultural Values profile
+  if(!isT2){
+    h+=`<div class="dev-guide-card"><div class="dev-guide-header"><div class="dev-guide-eyebrow">Before You Arrive in Italy</div><h3>Ways to Develop Each Dimension</h3><p>Now that you have your baseline Cultural Intelligence profile, here are concrete activities for each dimension — things you can do before departure to start building your cross-cultural capability.</p></div>`;
+    DIM.forEach(d=>{
+      h+=`<div class="dev-dim-block"><div class="dev-dim-title">${d.icon} ${d.name}</div><div class="dev-subdims">${d.subdims.map(s=>`<div class="dev-subdim-row"><div class="dev-subdim-name">${s.name}</div><div class="dev-subdim-activity">${s.example}</div></div>`).join('')}</div></div>`;
+    });
+    h+='</div>';
+  }
+
+  // Cultural values profile (T1 only) — after dev guide
   if(!isT2&&Object.values(cvR).some(d=>Object.values(d).some(v=>v>0))){
     h+=`<div class="values-profile-card">
       <h3>🌍 Your Cultural Value Orientations</h3>
-      <div class="card-sub">Your position on each of the 10 cultural value dimensions, compared to where major cultural clusters tend to fall. <span style="color:var(--gold-dark);font-weight:600;">Gold = Latin Europe (Italy)</span> — your destination culture.</div>`;
+      <div class="card-sub">Your position on each of the 10 cultural value dimensions, compared to where major cultural clusters tend to fall. <span style="color:var(--gold-dark);font-weight:600;">Gold highlighting = Latin Europe (Italy)</span> — your destination culture.</div>`;
     CV.forEach(d=>{
       const score=calcCVScore(d), pct=scoreToPercent(score);
       h+=`<div class="values-result-row">
@@ -1179,21 +1346,11 @@ function showResults(){
           </div>
           <div class="values-result-marker" style="left:${score>0?pct+'%':'50%'}">${score>0?'▲':'?'}</div>
         </div>
-        <div class="values-result-label"><span class="values-result-name">${d.leftPole} ↔ ${d.rightPole}</span><span class="values-result-pos">${score>0?zoneLabel(score):'Not answered'}</span></div>
       </div>`;
     });
     const alignedCount=CV.filter(d=>{ const sc=calcCVScore(d); if(sc<=0)return false; const sz=sc<3?0:sc>5?2:1; return sz===d.italyZone; }).length;
     const answered=CV.filter(d=>calcCVScore(d)>0).length;
     h+=`<div class="italy-note"><strong>🇮🇹 Italy (Latin Europe) check-in:</strong> Based on your responses, you align with the Latin Europe cluster on roughly <strong>${alignedCount} of ${answered}</strong> dimensions you answered. The dimensions where you diverge most are likely where you'll feel the most cultural friction — and the most growth — during your time in Italy.</div></div>`;
-  }
-
-  // Dev guide (T1 only)
-  if(!isT2){
-    h+=`<div class="dev-guide-card"><div class="dev-guide-header"><div class="dev-guide-eyebrow">Before You Arrive in Italy</div><h3>Ways to Develop Each Dimension</h3><p>Now that you have your baseline Cultural Intelligence profile, here are concrete activities for each dimension — things you can do before departure to start building your cross-cultural capability.</p></div>`;
-    DIM.forEach(d=>{
-      h+=`<div class="dev-dim-block"><div class="dev-dim-title">${d.icon} ${d.name}</div><div class="dev-subdims">${d.subdims.map(s=>`<div class="dev-subdim-row"><div class="dev-subdim-name">${s.name}</div><div class="dev-subdim-activity">${s.example}</div></div>`).join('')}</div></div>`;
-    });
-    h+='</div>';
   }
 
   // Submit card
@@ -1220,19 +1377,15 @@ function showResults(){
       <button class="btn-copy ghost" onclick="copyCode()">Copy Export Code</button>
       <div class="copied-toast" id="copiedCode">✓ Copied — now paste into ICON.</div>
     </div>
-    <div class="submit-footer" style="text-align:left;border:none;padding:0;margin-top:0;"></div>
   </div>`;
 
-  // Italy activity (T1 only, after submit)
+  // Italy activity (T1 only, after submit — inform only, no textarea)
   if(!isT2){
-    const savedActivity=italyActivity||'';
     h+=`<div class="italy-activity-card" style="margin-top:24px;">
       <div class="ia-eyebrow">Your Next Step</div>
       <h3>🇮🇹 Italian Culture Engagement Activity</h3>
       <p>Before you arrive in Italy, I'd like you to engage with Italian culture in some way and share what you discover. It's helpful to connect with an existing interest — perhaps food, art, language, fashion, music, sports, history, design, film, or something else entirely. Think about what you'd like to explore, then describe what you plan to do (or have already done) to engage with Italian culture as preparation for your cultural immersion.</p>
       <p style="margin-top:10px;">You'll document this with a <strong>photo + caption</strong> and upload it to the <a href="#" style="color:var(--gold);">shared Google Slides deck</a> by <strong>Monday, May 4th</strong> — photo on the slide, caption in the notes section. We'll review these together on the first day of class.</p>
-      <textarea id="italyActivityInput" placeholder="What will you do to engage with Italian culture before arriving?">${savedActivity}</textarea>
-      <div class="ia-saved-note">Your response here is for your own reference — make sure to also upload your photo + caption to Google Slides.</div>
     </div>`;
   }
 
@@ -1255,7 +1408,11 @@ function buildExport(S,isT2){
   })));
   if(secondLook&&secondLook.trim()) t+=`\nSECOND LOOK REFLECTION\n─────────────────────────\n${secondLook.trim()}\n`;
   t+=`\nREFLECTIONS\n─────────────────────────\n`;
-  DIM.forEach(d=>{ const rf=R[d.id].refl; if(rf&&rf.trim()) t+=`\n[${d.name}]\n${isT2?d.refl.t2:d.refl.t1}\n→ ${rf}\n`; });
+  if(isT2){
+    DIM.forEach(d=>{ const rf=R[d.id].refl; if(rf&&rf.trim()) t+=`\n[${d.name}]\n${d.refl.t2}\n→ ${rf}\n`; });
+  } else {
+    t+=`(Reflection prompts completed in physical course journal)\n`;
+  }
   if(!isT2){
     const cvAnswered=CV.filter(d=>calcCVScore(d)>0);
     if(cvAnswered.length){

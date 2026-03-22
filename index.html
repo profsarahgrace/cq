@@ -323,6 +323,7 @@
     .score-card, .radar-card, .values-profile-card, .comparison-card, .short-answers-card, .second-look-result { break-inside:avoid; page-break-inside:avoid; }
   }
   .journal-handoff-card{background:#fff;border-radius:17px;border:2px solid var(--navy);padding:30px;margin-bottom:26px;box-shadow:0 4px 20px var(--shadow);}
+  .journal-handoff-card.prework{background:#FFFBF0;border-color:var(--gold);box-shadow:0 4px 20px rgba(246,171,15,.12);}
   .jh-eyebrow{font-size:.68rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--navy);margin-bottom:8px;}
   .journal-handoff-card h3{font-family:'Playfair Display',serif;font-size:1.25rem;margin-bottom:10px;}
   .journal-handoff-card > p{font-size:.88rem;color:var(--ink-light);line-height:1.72;margin-bottom:22px;}
@@ -334,15 +335,13 @@
   .jh-q{font-size:.92rem;color:var(--ink);line-height:1.68;font-style:italic;}
 
   /* Italy activity (results page) */
-  .italy-activity-card{background:var(--ink);color:var(--cream);border-radius:17px;padding:32px;margin-bottom:26px;position:relative;overflow:hidden;}
-  .italy-activity-card::before{content:'🇮🇹';position:absolute;right:28px;top:24px;font-size:3rem;opacity:.12;}
-  .italy-activity-card .ia-eyebrow{font-size:.62rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--gold);margin-bottom:8px;}
-  .italy-activity-card h3{font-family:'Playfair Display',serif;font-size:1.3rem;color:#fff;margin-bottom:10px;}
-  .italy-activity-card p{font-size:.86rem;color:rgba(255,255,255,.65);line-height:1.68;margin-bottom:16px;}
-  .italy-activity-card p strong{color:rgba(255,255,255,.9);}
-  .italy-activity-card textarea{width:100%;padding:12px 15px;border:1.5px solid rgba(255,255,255,.18);border-radius:10px;font-family:'DM Sans',sans-serif;font-size:.9rem;background:rgba(255,255,255,.08);color:#fff;resize:vertical;min-height:100px;outline:none;line-height:1.65;}
-  .italy-activity-card textarea::placeholder{color:rgba(255,255,255,.35);}
-  .italy-activity-card textarea:focus{border-color:var(--gold);background:rgba(255,255,255,.12);}
+  .italy-activity-card{background:#FFFBF0;border:2px solid var(--gold);border-radius:17px;padding:32px;margin-bottom:26px;position:relative;overflow:hidden;}
+  .italy-activity-card::before{content:'🇮🇹';position:absolute;right:28px;top:24px;font-size:3rem;opacity:.1;}
+  .italy-activity-card .ia-eyebrow{font-size:.62rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--gold-dark);margin-bottom:8px;}
+  .italy-activity-card h3{font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--ink);margin-bottom:10px;}
+  .italy-activity-card p{font-size:.86rem;color:var(--ink-light);line-height:1.68;margin-bottom:0;}
+  .italy-activity-card p strong{color:var(--ink);}
+  .italy-activity-card a{color:var(--gold-dark);}
   .ia-saved-note{font-size:.74rem;color:rgba(255,255,255,.45);margin-top:8px;font-style:italic;}
 
   /* Submit */
@@ -689,8 +688,8 @@ const CV = [
     italyZone:1,
     clusters:[{name:'Anglo',zone:0},{name:'Germanic Europe',zone:0},{name:'Nordic Europe',zone:0},{name:'Confucian Asia',zone:1},{name:'Eastern Europe',zone:1},{name:'Latin Europe',zone:1,italy:true},{name:'Sub-Saharan Africa',zone:1},{name:'Arab',zone:2},{name:'Latin America',zone:2},{name:'Southern Asia',zone:2}],
     questions:[
-      {id:'cv_pd1',text:'When a professor, boss, or authority figure makes a decision you disagree with, how comfortable are you voicing that disagreement directly to them?',rev:false,anchorL:'Very uncomfortable — I\'d keep it to myself',anchorR:'Very comfortable — I\'d say something'},
-      {id:'cv_pd2',text:'In a group setting, how natural does it feel to take initiative and act without waiting for someone in charge to direct things?',rev:false,anchorL:'Uncomfortable — I\'d rather wait',anchorR:'Very natural — I just act'},
+      {id:'cv_pd1',text:'When a professor, boss, or authority figure makes a decision you disagree with, how comfortable are you voicing that disagreement directly to them?',rev:true,anchorL:'Very uncomfortable — I\'d keep it to myself',anchorR:'Very comfortable — I\'d say something'},
+      {id:'cv_pd2',text:'In a group setting, how natural does it feel to take initiative and act without waiting for someone in charge to direct things?',rev:true,anchorL:'Uncomfortable — I\'d rather wait',anchorR:'Very natural — I just act'},
       {id:'cv_pd3',text:'How much do you think a person\'s rank or title should influence how much weight their opinion gets in a discussion?',rev:false,anchorL:'Not at all — everyone\'s opinion matters equally',anchorR:'Significantly — rank reflects experience and authority'}
     ]},
   { id:'uncavo', leftPole:'Low Uncertainty Avoidance', rightPole:'High Uncertainty Avoidance',
@@ -701,7 +700,7 @@ const CV = [
     questions:[
       {id:'cv_ua1',text:'When you\'re about to do something new and unfamiliar with no clear instructions, how do you feel?',rev:false,anchorL:'Energized — I enjoy figuring it out',anchorR:'Anxious — I want more structure first'},
       {id:'cv_ua2',text:'How much do you prefer having a detailed plan before starting a project versus figuring it out as you go?',rev:false,anchorL:'I prefer to start and adapt',anchorR:'I need a clear plan before I begin'},
-      {id:'cv_ua3',text:'I find it exciting when a situation turns out to be completely different from what I expected.',rev:true,anchorL:'Strongly agree — I love surprises',anchorR:'Strongly disagree — I prefer predictability'}
+      {id:'cv_ua3',text:'I find it exciting when a situation turns out to be completely different from what I expected.',rev:false,anchorL:'Strongly agree — I love surprises',anchorR:'Strongly disagree — I prefer predictability'}
     ]},
   { id:'coocom', leftPole:'Cooperative', rightPole:'Competitive',
     leftDesc:'Collaboration, nurturing relationships, and quality of life are emphasized. Conflict is avoided; consensus and harmony matter. Work-life balance and caring for others are important values.',
@@ -721,7 +720,7 @@ const CV = [
     questions:[
       {id:'cv_sl1',text:'When making a financial decision — spending vs. saving — which tendency is more true of you right now?',rev:false,anchorL:'I tend to spend and enjoy the present',anchorR:'I tend to save and plan for the future'},
       {id:'cv_sl2',text:'How far into the future do you typically think when making a significant decision?',rev:false,anchorL:'I focus on what feels right now',anchorR:'I think about consequences years down the road'},
-      {id:'cv_sl3',text:'I\'d rather have a great experience now than sacrifice it for a future payoff that isn\'t guaranteed.',rev:true,anchorL:'Strongly agree — live in the present',anchorR:'Strongly disagree — I plan ahead'}
+      {id:'cv_sl3',text:'I\'d rather have a great experience now than sacrifice it for a future payoff that isn\'t guaranteed.',rev:false,anchorL:'Strongly agree — live in the present',anchorR:'Strongly disagree — I plan ahead'}
     ]},
   { id:'dirind', leftPole:'Low Context / Direct', rightPole:'High Context / Indirect',
     leftDesc:'Meaning is conveyed explicitly through words. People say what they mean and expect others to do the same. Clear, direct communication is valued as honest and efficient.',
@@ -751,7 +750,7 @@ const CV = [
     questions:[
       {id:'cv_up1',text:'A close friend has asked you to cover for them in a situation where telling the truth would get them in serious trouble. What feels more right?',rev:false,anchorL:'Tell the truth — rules apply to everyone equally',anchorR:'Cover for them — loyalty to someone I care about comes first'},
       {id:'cv_up2',text:'When enforcing rules or making decisions, how much should personal relationships factor in?',rev:false,anchorL:'Rules are rules — apply them the same to everyone',anchorR:'Context and relationships matter — sometimes exceptions are warranted'},
-      {id:'cv_up3',text:'Someone you don\'t know breaks a rule. Someone you\'re close to breaks the same rule. Do you respond the same way to both?',rev:true,anchorL:'Yes — I apply the same standard regardless',anchorR:'No — my relationship changes how I respond'}
+      {id:'cv_up3',text:'Someone you don\'t know breaks a rule. Someone you\'re close to breaks the same rule. Do you respond the same way to both?',rev:false,anchorL:'Yes — I apply the same standard regardless',anchorR:'No — my relationship changes how I respond'}
     ]},
   { id:'neuaff', leftPole:'Neutral / Non-Expressive', rightPole:'Affective / Expressive',
     leftDesc:'Emotions are kept private, especially in professional or public settings. People maintain composure and see emotional restraint as a sign of professionalism and respect.',
@@ -761,7 +760,7 @@ const CV = [
     questions:[
       {id:'cv_na1',text:'When you feel strongly about something — excited, frustrated, moved — how naturally do you express that emotion in the moment?',rev:false,anchorL:'I tend to keep it contained',anchorR:'I express it openly and naturally'},
       {id:'cv_na2',text:'In a professional or academic setting, how comfortable are you showing enthusiasm, frustration, or emotion openly?',rev:false,anchorL:'Uncomfortable — I keep emotions out of those contexts',anchorR:'Comfortable — showing feeling is natural and authentic'},
-      {id:'cv_na3',text:'I tend to find it uncomfortable when people around me express strong emotions openly in social or professional settings.',rev:true,anchorL:'Strongly agree — it makes me uncomfortable',anchorR:'Strongly disagree — I enjoy expressive people'}
+      {id:'cv_na3',text:'I tend to find it uncomfortable when people around me express strong emotions openly in social or professional settings.',rev:false,anchorL:'Strongly agree — it makes me uncomfortable',anchorR:'Strongly disagree — I enjoy expressive people'}
     ]},
   { id:'monpol', leftPole:'Monochronic / Linear', rightPole:'Polychronic / Non-Linear',
     leftDesc:'Time is structured and sequential. One thing at a time. Schedules, punctuality, and clear boundaries between work and personal life are important and respected.',
@@ -1374,7 +1373,7 @@ function showResults(){
 
   // Submit card (PDF button lives here)
   const exp=buildExport(S,isT2);
-  h+=`<div class="submit-card no-print">
+  h+=`<div class="submit-card no-print" style="margin-bottom:32px;">
     <div class="submit-card-header">
       <h3>Submit Your Assessment</h3>
       <p>${isT2?'One step to complete your submission.':'Two steps — complete both to receive full credit.'}</p>
@@ -1413,32 +1412,39 @@ function showResults(){
       </div>
     </div>`;
   } else {
-    h+=`<div class="journal-handoff-card no-print">
-      <div class="jh-eyebrow">📓 Now Open Your Journal</div>
+    h+=`<div class="journal-handoff-card prework no-print" style="margin-top:32px;">
+      <div class="jh-eyebrow" style="color:var(--gold-dark);">📓 Next Step to Complete Your Pre-Work</div>
       <h3>Take Your Results to Your Physical Journal</h3>
-      <p>The reflection work for this assessment happens on paper — not on screen. With your CQ profile in front of you, work through each of the prompts below in your course journal. Take your time — these are the beginning of a four-week conversation with yourself.</p>
+      <p>The reflection work for this assessment happens on paper — not on screen. With your CQ profile in front of you, work through each of the prompts below in your course journal. Take your time — these are the beginning of a four-week conversation with yourself. <strong style="color:var(--ink);">Journals will be checked throughout the course for completion.</strong></p>
       <div class="jh-prompts">
         ${DIM.map(d=>`<div class="jh-prompt-item">
-          <div class="jh-dim">${d.icon} ${d.name}</div>
+          <div class="jh-dim" style="color:var(--gold-dark)">${d.icon} ${d.name}</div>
           <div class="jh-q">${d.id==='action'
             ? 'How flexible are you, really? Think of a time you were asked — explicitly or implicitly — to behave differently than you naturally would. Did you adapt? Why or why not?'
             : d.refl.t1}</div>
         </div>`).join('')}
         <div class="jh-prompt-item jh-bridge">
-          <div class="jh-dim">✦ Bringing It Together</div>
+          <div class="jh-dim" style="color:var(--gold-dark)">✦ Bringing It Together</div>
           <div class="jh-q">Looking at your full Cultural Intelligence profile, what does it tell you about the kind of cross-cultural learner you currently are — and the kind you want to become by the end of the program?</div>
         </div>
         <div class="jh-prompt-item jh-bridge">
-          <div class="jh-dim">🌍 Your Cultural Values</div>
+          <div class="jh-dim" style="color:var(--gold-dark)">🌍 Your Cultural Values</div>
           <div class="jh-q">Look at the cultural value dimensions above where you diverge most from Latin Europe (Italy). What do you predict will feel most surprising, frustrating, or energizing about navigating those gaps? What might you need to consciously work on?</div>
+        </div>
+        <div class="jh-prompt-item jh-bridge">
+          <div class="jh-dim" style="color:var(--gold-dark)">📚 Connecting the Sources</div>
+          <div class="jh-q" style="margin-bottom:8px;">Having completed this assessment and engaged with the CQ and trust readings — including the <a href="https://notebooklm.google.com/notebook/1f8ae368-08d8-4464-8f71-52a21e35884a" target="_blank" style="color:var(--gold-dark);text-decoration:underline;">NotebookLM</a> — reflect on the following:</div>
+          <div class="jh-q" style="margin-bottom:6px;"><strong>1. Professionally:</strong> What does the intersection of cultural intelligence and trust mean for you as a future business professional? How might your CQ profile shape — or limit — your effectiveness across cultures?</div>
+          <div class="jh-q" style="margin-bottom:6px;"><strong>2. Personally:</strong> What does this information reveal about you as an individual? What surprised you, and what feels like unfinished work?</div>
+          <div class="jh-q"><strong>3. The bigger picture:</strong> What do you think the combination of declining global trust and rising cultural complexity means for the future of international marketing and business?</div>
         </div>
       </div>
     </div>
     <div class="italy-activity-card no-print" style="margin-top:0;">
-      <div class="ia-eyebrow">Your Next Step</div>
-      <h3>🇮🇹 Italian Culture Engagement Activity</h3>
+      <div class="ia-eyebrow">🇮🇹 Final Step to Complete Your Pre-Work</div>
+      <h3>Engage with Italian Culture + Share Your Experience</h3>
       <p>Before you arrive in Italy, I'd like you to engage with Italian culture in some way and share what you discover. It's helpful to connect with an existing interest — perhaps food, art, language, fashion, music, sports, history, design, film, or something else entirely.</p>
-      <p style="margin-top:10px;">You'll document this with a <strong>photo + caption</strong> and upload it to the <a href="https://docs.google.com/presentation/d/1v3gNvy9lEeJHlspXdJuV5-CTYETcEqDMoMQVzRONV1o/edit?usp=sharing" target="_blank" style="color:var(--gold);">shared Google Slides deck</a> by <strong>Monday, May 4th</strong> — photo on the slide, caption in the notes section. We'll review these together on the first day of class.</p>
+      <p style="margin-top:10px;">You'll document this with a <strong>photo + caption</strong> and upload it to the <a href="https://docs.google.com/presentation/d/1v3gNvy9lEeJHlspXdJuV5-CTYETcEqDMoMQVzRONV1o/edit?usp=sharing" target="_blank">shared Google Slides deck</a> by <strong>Monday, May 4th</strong> — photo on the slide, caption in the notes section. We'll review these together on the first day of class.</p>
     </div>`;
   }
 
